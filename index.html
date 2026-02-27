@@ -1,60 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Flappy Bird - HAIDANG</title>
-<style>
-body {
-    margin: 0;
-    background: skyblue;
-    font-family: Arial;
-    text-align: center;
-}
-
-canvas {
-    background: #70c5ce;
-    display: block;
-    margin: 20px auto;
-}
-
-#score {
-    font-size: 28px;
-    color: white;
-    font-weight: bold;
-}
-
-#gameOver {
-    font-size: 32px;
-    color: red;
-    display: none;
-    margin: 10px;
-}
-
-#jumpBtn {
-    padding: 15px 40px;
-    font-size: 20px;
-    border: none;
-    border-radius: 15px;
-    background: yellow;
-    cursor: pointer;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-#jumpBtn:hover {
-    background: orange;
-}
-</style>
-</head>
-<body>
-
-<div id="score">0</div>
-<div id="gameOver">GAME OVER<br>Click để chơi lại</div>
-
-<canvas id="gameCanvas" width="400" height="600"></canvas>
-
-<button id="jumpBtn">⬆ NHẢY</button>
-
 <script>
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
@@ -66,13 +9,16 @@ let lift = -6;
 
 let pipes = [];
 let pipeWidth = 60;
-let gap = 220;   // 🔥 MỞ RỘNG KHE HỞ (trước là 160)
+let gap = 220;
 
 let score = 0;
 let gameRunning = true;
 
 let birdImg = new Image();
 birdImg.src = "chim.png";
+
+let pipeImg = new Image();     // ✅ THÊM ẢNH ỐNG
+pipeImg.src = "ong.png";       // ✅ TÊN FILE PHẢI ĐÚNG ong.png
 
 function resetGame(){
     bird.y = 300;
@@ -113,9 +59,21 @@ function drawPipes(){
     for(let i = pipes.length - 1; i >= 0; i--){
         let pipe = pipes[i];
 
-        ctx.fillStyle = "green";
-        ctx.fillRect(pipe.x, 0, pipeWidth, pipe.top);
-        ctx.fillRect(pipe.x, pipe.bottom, pipeWidth, canvas.height);
+        // ✅ VẼ ỐNG TRÊN (LẬT NGƯỢC)
+        ctx.save();
+        ctx.translate(pipe.x + pipeWidth/2, pipe.top);
+        ctx.scale(1, -1);
+        ctx.drawImage(pipeImg, -pipeWidth/2, 0, pipeWidth, pipe.top);
+        ctx.restore();
+
+        // ✅ VẼ ỐNG DƯỚI
+        ctx.drawImage(
+            pipeImg,
+            pipe.x,
+            pipe.bottom,
+            pipeWidth,
+            canvas.height - pipe.bottom
+        );
 
         pipe.x -= 2;
 
@@ -180,6 +138,3 @@ document.getElementById("jumpBtn").addEventListener("click", jump);
 
 update();
 </script>
-
-</body>
-</html>
