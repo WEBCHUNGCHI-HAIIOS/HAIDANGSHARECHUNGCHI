@@ -117,26 +117,30 @@ birdImg.src = "chim.png";
 let pipeImg = new Image();
 pipeImg.src = "ong.png";
 
-/* ===== GIỌNG CHÀO MỪNG ===== */
-let welcomed = false;
-
-document.getElementById("startScreen").addEventListener("click", function(){
-
-    if(welcomed) return;
-
-    welcomed = true;
-
+/* ===== GIỌNG CHÀO ===== */
+function speakWelcome(){
     let msg = new SpeechSynthesisUtterance(
         "Chào mừng bạn đến với game của Hải Đặng. Nhận làm web, chạy mạng xã hội, Facebook Vũ Đình Hoàng."
     );
-
     msg.lang = "vi-VN";
     msg.rate = 1;
     msg.pitch = 1;
-
     speechSynthesis.speak(msg);
+}
+
+// Thử nói khi vừa mở web
+window.addEventListener("load", function(){
+    setTimeout(function(){
+        speakWelcome();
+    }, 500);
 });
-/* ========================== */
+
+// Nếu bị chặn thì click lần đầu sẽ nói
+document.body.addEventListener("click", function once(){
+    speakWelcome();
+    document.body.removeEventListener("click", once);
+});
+/* ====================== */
 
 function resetGame(){
     bird.y = 300;
