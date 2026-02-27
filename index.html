@@ -6,7 +6,6 @@
 <style>
 body {
     margin: 0;
-    overflow: hidden;
     background: skyblue;
     font-family: Arial;
     text-align: center;
@@ -15,27 +14,35 @@ body {
 canvas {
     background: #70c5ce;
     display: block;
-    margin: auto;
+    margin: 20px auto;
 }
 
 #score {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 30px;
+    font-size: 28px;
     color: white;
     font-weight: bold;
 }
 
 #gameOver {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 40px;
+    font-size: 32px;
     color: red;
     display: none;
+    margin: 10px;
+}
+
+#jumpBtn {
+    padding: 15px 40px;
+    font-size: 20px;
+    border: none;
+    border-radius: 15px;
+    background: yellow;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#jumpBtn:hover {
+    background: orange;
 }
 </style>
 </head>
@@ -43,7 +50,10 @@ canvas {
 
 <div id="score">0</div>
 <div id="gameOver">GAME OVER<br>Click để chơi lại</div>
+
 <canvas id="gameCanvas" width="400" height="600"></canvas>
+
+<button id="jumpBtn">⬆ NHẢY</button>
 
 <script>
 const canvas = document.getElementById("gameCanvas");
@@ -51,8 +61,8 @@ const ctx = canvas.getContext("2d");
 
 let bird = { x: 80, y: 300, radius: 15, velocity: 0 };
 
-let gravity = 0.3;   // Rơi chậm hơn
-let lift = -6;       // Nhảy nhẹ hơn
+let gravity = 0.3;
+let lift = -6;
 
 let pipes = [];
 let pipeWidth = 60;
@@ -69,6 +79,12 @@ function resetGame(){
     gameRunning = true;
     document.getElementById("score").innerText = score;
     document.getElementById("gameOver").style.display = "none";
+}
+
+function jump(){
+    if(gameRunning){
+        bird.velocity = lift;
+    }
 }
 
 function drawBird(){
@@ -141,7 +157,7 @@ setInterval(createPipe, 2000);
 
 document.addEventListener("keydown", e => {
     if(e.code === "Space"){
-        bird.velocity = lift;
+        jump();
     }
 });
 
@@ -150,9 +166,11 @@ canvas.addEventListener("click", () => {
         resetGame();
         update();
     } else {
-        bird.velocity = lift;
+        jump();
     }
 });
+
+document.getElementById("jumpBtn").addEventListener("click", jump);
 
 update();
 </script>
