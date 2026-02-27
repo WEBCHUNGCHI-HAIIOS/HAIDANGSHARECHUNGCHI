@@ -102,7 +102,12 @@ let pipeWidth = 60;
 let gap = 220;
 
 let score = 0;
-let gameRunning = false; // bắt đầu = false
+let gameRunning = false;
+
+/* ===== ÂM THANH (THÊM MỚI) ===== */
+let jumpSound = new Audio("jump.mp3");
+let dieSound = new Audio("jump.mp3");
+/* ================================ */
 
 let birdImg = new Image();
 birdImg.src = "chim.png";
@@ -123,6 +128,10 @@ function resetGame(){
 function jump(){
     if(gameRunning){
         bird.velocity = lift;
+
+        /* ÂM THANH NHẢY */
+        jumpSound.currentTime = 0;
+        jumpSound.play();
     }
 }
 
@@ -185,6 +194,11 @@ function drawPipes(){
 
 function gameOver(){
     gameRunning = false;
+
+    /* ÂM THANH THUA */
+    dieSound.currentTime = 0;
+    dieSound.play();
+
     document.getElementById("gameOver").style.display = "block";
 }
 
@@ -225,7 +239,6 @@ canvas.addEventListener("click", () => {
 
 document.getElementById("jumpBtn").addEventListener("click", jump);
 
-/* ===== START BUTTON ===== */
 document.getElementById("startBtn").addEventListener("click", function(){
     document.getElementById("startScreen").style.display = "none";
     resetGame();
