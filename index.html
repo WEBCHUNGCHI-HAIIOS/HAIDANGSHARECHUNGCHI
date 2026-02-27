@@ -70,17 +70,27 @@ canvas {
     font-weight:bold;
     cursor:pointer;
 }
+#introText{
+    width:70%;
+    min-height:80px;
+    color:white;
+    font-size:20px;
+    margin-bottom:30px;
+}
 </style>
 </head>
 <body>
 
+<!-- START SCREEN -->
 <div id="startScreen">
     <div class="bigTitle">FLAPPY BIRD</div>
     <button id="startBtn" class="bigBtn">START</button>
 </div>
 
+<!-- INTRO SCREEN -->
 <div id="introScreen">
     <div class="bigTitle">Giới thiệu</div>
+    <div id="introText"></div>
     <button id="skipBtn" class="bigBtn">BỎ QUA</button>
 </div>
 
@@ -123,33 +133,28 @@ birdImg.src = "chim.png";
 let pipeImg = new Image();
 pipeImg.src = "ong.png";
 
-/* ===== GIỌNG VIỆT RÕ HƠN ===== */
+/* ===== TEXT + GIỌNG ===== */
+const introMessage = "Chào mừng bạn đến với game của Hải Đặng. Nhận làm web, chạy mạng xã hội, Facebook Vũ Đình Hoàng.";
+const introText = document.getElementById("introText");
+let typingIndex = 0;
 let introSpeech;
 
-function speakLoop(){
-
-    let voices = speechSynthesis.getVoices();
-
-    // Ưu tiên giọng tiếng Việt chuẩn
-    let vietnameseVoice =
-        voices.find(v => v.lang === "vi-VN" && v.name.includes("Vietnam")) ||
-        voices.find(v => v.lang === "vi-VN");
-
-    introSpeech = new SpeechSynthesisUtterance(
-        "Chào mừng bạn đến với game của Hải Đặng. Nhận làm web, chạy mạng xã hội, Facebook Vũ Đình Nam."
-    );
-
-    if(vietnameseVoice){
-        introSpeech.voice = vietnameseVoice;
+function typeWriter(){
+    if(typingIndex < introMessage.length){
+        introText.innerHTML += introMessage.charAt(typingIndex);
+        typingIndex++;
+        setTimeout(typeWriter, 40);
     }
+}
 
+function speakLoop(){
+    introSpeech = new SpeechSynthesisUtterance(introMessage);
     introSpeech.lang = "vi-VN";
-    introSpeech.rate = 0.85;   // nói chậm hơn cho rõ
+    introSpeech.rate = 0.9;
     introSpeech.pitch = 1;
-    introSpeech.volume = 1;
 
     introSpeech.onend = function(){
-        speakLoop(); // lặp lại sau khi nói xong
+        speakLoop();
     };
 
     speechSynthesis.speak(introSpeech);
@@ -159,14 +164,18 @@ function speakLoop(){
 document.getElementById("startBtn").addEventListener("click", function(){
     document.getElementById("startScreen").style.display = "none";
     document.getElementById("introScreen").style.display = "flex";
-    speechSynthesis.cancel();
+
+    introText.innerHTML = "";
+    typingIndex = 0;
+
+    typeWriter();
     speakLoop();
 });
 
-/* ===== BỎ QUA → GAME ===== */
+/* ===== BỎ QUA → CHẠY GAME ===== */
 document.getElementById("skipBtn").addEventListener("click", function(){
 
-    speechSynthesis.cancel(); // dừng nói ngay
+    speechSynthesis.cancel();
 
     document.getElementById("introScreen").style.display = "none";
 
