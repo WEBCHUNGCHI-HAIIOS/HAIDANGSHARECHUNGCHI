@@ -125,24 +125,38 @@ birdImg.src = "chim.png";
 let pipeImg = new Image();
 pipeImg.src = "ong.png";
 
+/* ===== GIỌNG NÓI LẶP ===== */
+let introSpeech;
+
+function speakLoop(){
+    introSpeech = new SpeechSynthesisUtterance(
+        "Chào mừng bạn đến với game của Hải Đặng. Nhận làm web, chạy mạng xã hội, Facebook Vũ Đình Nam."
+    );
+    introSpeech.lang = "vi-VN";
+    introSpeech.rate = 1;
+    introSpeech.pitch = 1;
+
+    introSpeech.onend = function(){
+        speakLoop();
+    };
+
+    speechSynthesis.speak(introSpeech);
+}
+
 /* ===== START → INTRO ===== */
 document.getElementById("startBtn").addEventListener("click", function(){
     document.getElementById("startScreen").style.display = "none";
     document.getElementById("introScreen").style.display = "flex";
-
-    // Giọng nói ở màn hình giới thiệu
-    let msg = new SpeechSynthesisUtterance(
-        "Chào mừng bạn đến với game của Hải Đặng. Nhận làm web, chạy mạng xã hội, Facebook Vũ Đình Nam."
-    );
-    msg.lang = "vi-VN";
-    msg.rate = 1;
-    msg.pitch = 1;
-    speechSynthesis.speak(msg);
+    speakLoop();
 });
 
 /* ===== BỎ QUA → CHẠY GAME ===== */
 document.getElementById("skipBtn").addEventListener("click", function(){
+
+    speechSynthesis.cancel(); // dừng nói ngay
+
     document.getElementById("introScreen").style.display = "none";
+
     bgMusic.play();
     resetGame();
     update();
