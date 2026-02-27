@@ -39,8 +39,6 @@ canvas {
 #jumpBtn:hover {
     background: orange;
 }
-
-/* ====== START SCREEN ====== */
 #startScreen{
     position:fixed;
     width:100%;
@@ -53,14 +51,12 @@ canvas {
     top:0;
     left:0;
 }
-
 #startTitle{
     font-size:48px;
     color:yellow;
     text-shadow:3px 3px black;
     margin-bottom:40px;
 }
-
 #startBtn{
     padding:20px 60px;
     font-size:28px;
@@ -75,7 +71,6 @@ canvas {
 </head>
 <body>
 
-<!-- START SCREEN -->
 <div id="startScreen">
     <div id="startTitle">FLAPPY BIRD</div>
     <button id="startBtn">START</button>
@@ -104,10 +99,14 @@ let gap = 220;
 let score = 0;
 let gameRunning = false;
 
-/* ===== ÂM THANH (THÊM MỚI) ===== */
+/* ===== ÂM THANH ===== */
 let jumpSound = new Audio("jump.mp3");
 let dieSound = new Audio("jump.mp3");
-/* ================================ */
+
+/* ===== NHẠC NỀN TỰ LẶP ===== */
+let bgMusic = new Audio("jump.mp3"); 
+bgMusic.loop = true;
+/* ===================== */
 
 let birdImg = new Image();
 birdImg.src = "chim.png";
@@ -128,8 +127,6 @@ function resetGame(){
 function jump(){
     if(gameRunning){
         bird.velocity = lift;
-
-        /* ÂM THANH NHẢY */
         jumpSound.currentTime = 0;
         jumpSound.play();
     }
@@ -194,11 +191,8 @@ function drawPipes(){
 
 function gameOver(){
     gameRunning = false;
-
-    /* ÂM THANH THUA */
     dieSound.currentTime = 0;
     dieSound.play();
-
     document.getElementById("gameOver").style.display = "block";
 }
 
@@ -241,6 +235,11 @@ document.getElementById("jumpBtn").addEventListener("click", jump);
 
 document.getElementById("startBtn").addEventListener("click", function(){
     document.getElementById("startScreen").style.display = "none";
+
+    /* CHẠY NHẠC NỀN */
+    bgMusic.currentTime = 0;
+    bgMusic.play();
+
     resetGame();
     update();
 });
