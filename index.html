@@ -59,7 +59,7 @@ canvas {
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-let bird = { x: 80, y: 300, radius: 15, velocity: 0 };
+let bird = { x: 80, y: 300, velocity: 0 };
 
 let gravity = 0.3;
 let lift = -6;
@@ -70,6 +70,10 @@ let gap = 160;
 
 let score = 0;
 let gameRunning = true;
+
+// ===== LOAD ẢNH CHIM =====
+let birdImg = new Image();
+birdImg.src = "chim.png";
 
 function resetGame(){
     bird.y = 300;
@@ -88,10 +92,13 @@ function jump(){
 }
 
 function drawBird(){
-    ctx.beginPath();
-    ctx.arc(bird.x, bird.y, bird.radius, 0, Math.PI * 2);
-    ctx.fillStyle = "yellow";
-    ctx.fill();
+    ctx.drawImage(
+        birdImg,
+        bird.x - 20,
+        bird.y - 20,
+        40,
+        40
+    );
 }
 
 function createPipe(){
@@ -120,10 +127,10 @@ function drawPipes(){
         }
 
         if(
-            bird.x + bird.radius > pipe.x &&
-            bird.x - bird.radius < pipe.x + pipeWidth &&
-            (bird.y - bird.radius < pipe.top ||
-             bird.y + bird.radius > pipe.bottom)
+            bird.x + 20 > pipe.x &&
+            bird.x - 20 < pipe.x + pipeWidth &&
+            (bird.y - 20 < pipe.top ||
+             bird.y + 20 > pipe.bottom)
         ){
             gameOver();
         }
@@ -143,7 +150,7 @@ function update(){
     bird.velocity += gravity;
     bird.y += bird.velocity;
 
-    if(bird.y + bird.radius > canvas.height || bird.y - bird.radius < 0){
+    if(bird.y + 20 > canvas.height || bird.y - 20 < 0){
         gameOver();
     }
 
