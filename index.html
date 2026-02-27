@@ -135,10 +135,11 @@ birdImg.src = "chim.png";
 let pipeImg = new Image();
 pipeImg.src = "ong.png";
 
-/* INTRO */
-const introMessage = "Chào mừng bạn đến với game của Hải Đặng.";
+/* INTRO + GIỌNG NÓI */
+const introMessage = "Chào mừng bạn đến với game của Hải Đặng. Nhận làm web, chạy mạng xã hội, Facebook Vũ Đình Hoàng.";
 const introText = document.getElementById("introText");
 let typingIndex = 0;
+let introSpeech;
 
 function typeWriter(){
     if(typingIndex < introMessage.length){
@@ -148,16 +149,32 @@ function typeWriter(){
     }
 }
 
+function speakLoop(){
+    introSpeech = new SpeechSynthesisUtterance(introMessage);
+    introSpeech.lang = "vi-VN";
+    introSpeech.rate = 0.9;
+    introSpeech.pitch = 1;
+
+    introSpeech.onend = function(){
+        speakLoop();
+    };
+
+    speechSynthesis.speak(introSpeech);
+}
+
 document.getElementById("startBtn").addEventListener("click", function(){
     document.getElementById("startScreen").style.display = "none";
     document.getElementById("introScreen").style.display = "flex";
 
     introText.innerHTML = "";
     typingIndex = 0;
+
     typeWriter();
+    speakLoop();
 });
 
 document.getElementById("skipBtn").addEventListener("click", function(){
+    speechSynthesis.cancel();
     document.getElementById("introScreen").style.display = "none";
     bgMusic.play();
     resetGame();
