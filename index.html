@@ -3,92 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <title>Flappy Bird - HAIDANG</title>
+
 <style>
-body {
+html, body {
     margin: 0;
-    background: skyblue;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    background: #70c5ce;
     font-family: Arial;
     text-align: center;
 }
 
 canvas {
-    background: #70c5ce;
     display: block;
-    margin: 20px auto;
-    width: 400px;
-    height: 600px;
-    max-width: 100%;
+    background: #70c5ce;
+    width: 100vw;
+    height: 100vh;
 }
 
 #score {
+    position: absolute;
+    top: 20px;
+    width: 100%;
     font-size: 28px;
     color: white;
     font-weight: bold;
+    z-index: 10;
 }
 
 #gameOver {
+    position: absolute;
+    top: 80px;
+    width: 100%;
     font-size: 32px;
     color: red;
     display: none;
-    margin: 10px;
-}
-
-#startScreen, #introScreen{
-    position:fixed;
-    width:100%;
-    height:100%;
-    background:#70c5ce;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    top:0;
-    left:0;
-}
-
-#introScreen{
-    display:none;
-}
-
-.bigTitle{
-    font-size:48px;
-    color:yellow;
-    text-shadow:3px 3px black;
-    margin-bottom:40px;
-}
-
-.bigBtn{
-    padding:20px 60px;
-    font-size:28px;
-    border:none;
-    border-radius:20px;
-    background:#00aaff;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-#introText{
-    width:70%;
-    min-height:80px;
-    color:white;
-    font-size:20px;
-    margin-bottom:30px;
+    z-index: 10;
 }
 </style>
 </head>
+
 <body>
-
-<div id="startScreen">
-    <div class="bigTitle">FLAPPY BIRD</div>
-    <button id="startBtn" class="bigBtn">START</button>
-</div>
-
-<div id="introScreen">
-    <div class="bigTitle">Giới thiệu</div>
-    <div id="introText"></div>
-    <button id="skipBtn" class="bigBtn">BỎ QUA</button>
-</div>
 
 <div id="score">0</div>
 <div id="gameOver">GAME OVER<br>Click để chơi lại</div>
@@ -108,18 +64,16 @@ let pipeWidth = 60;
 let gap = 220;
 
 let score = 0;
-let gameRunning = false;
+let gameRunning = true;
 
 /* ===== ÂM THANH ===== */
 let bgMusic = new Audio("music.mp3");
 bgMusic.loop = true;
 bgMusic.volume = 0.5;
+bgMusic.play();
 
 let jumpSound = new Audio("jump.mp3");
-jumpSound.volume = 0.7;
-
 let dieSound = new Audio("die.mp3");
-dieSound.volume = 0.7;
 /* ==================== */
 
 let birdImg = new Image();
@@ -127,52 +81,6 @@ birdImg.src = "chim.png";
 
 let pipeImg = new Image();
 pipeImg.src = "ong.png";
-
-/* ===== TEXT + GIỌNG ===== */
-const introMessage = "Chào mừng bạn đến với game của Hải Đặng. Nhận làm web, chạy mạng xã hội, Facebook Vũ Đình Hoàng.";
-const introText = document.getElementById("introText");
-let typingIndex = 0;
-let introSpeech;
-
-function typeWriter(){
-    if(typingIndex < introMessage.length){
-        introText.innerHTML += introMessage.charAt(typingIndex);
-        typingIndex++;
-        setTimeout(typeWriter, 40);
-    }
-}
-
-function speakLoop(){
-    introSpeech = new SpeechSynthesisUtterance(introMessage);
-    introSpeech.lang = "vi-VN";
-    introSpeech.rate = 0.9;
-    introSpeech.pitch = 1;
-
-    introSpeech.onend = function(){
-        speakLoop();
-    };
-
-    speechSynthesis.speak(introSpeech);
-}
-
-document.getElementById("startBtn").addEventListener("click", function(){
-    document.getElementById("startScreen").style.display = "none";
-    document.getElementById("introScreen").style.display = "flex";
-
-    introText.innerHTML = "";
-    typingIndex = 0;
-
-    typeWriter();
-    speakLoop();
-});
-
-document.getElementById("skipBtn").addEventListener("click", function(){
-    speechSynthesis.cancel();
-    document.getElementById("introScreen").style.display = "none";
-    bgMusic.play();
-    resetGame();
-    update();
-});
 
 function resetGame(){
     bird.y = 300;
@@ -262,13 +170,6 @@ function update(){
 
 setInterval(createPipe, 2000);
 
-/* ===== CHẠM MÀN HÌNH LÀ BAY ===== */
-document.addEventListener("keydown", e => {
-    if(e.code === "Space"){
-        jump();
-    }
-});
-
 document.addEventListener("click", () => {
     if(!gameRunning){
         resetGame();
@@ -287,6 +188,15 @@ document.addEventListener("touchstart", (e) => {
         jump();
     }
 });
+
+document.addEventListener("keydown", e => {
+    if(e.code === "Space"){
+        jump();
+    }
+});
+
+update();
 </script>
+
 </body>
 </html>
