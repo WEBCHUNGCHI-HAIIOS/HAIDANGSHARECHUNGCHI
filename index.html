@@ -74,13 +74,11 @@ canvas {
 </head>
 <body>
 
-<!-- START SCREEN -->
 <div id="startScreen">
     <div class="bigTitle">FLAPPY BIRD</div>
     <button id="startBtn" class="bigBtn">START</button>
 </div>
 
-<!-- INTRO SCREEN -->
 <div id="introScreen">
     <div class="bigTitle">Giới thiệu</div>
     <button id="skipBtn" class="bigBtn">BỎ QUA</button>
@@ -125,19 +123,33 @@ birdImg.src = "chim.png";
 let pipeImg = new Image();
 pipeImg.src = "ong.png";
 
-/* ===== GIỌNG NÓI LẶP ===== */
+/* ===== GIỌNG VIỆT RÕ HƠN ===== */
 let introSpeech;
 
 function speakLoop(){
+
+    let voices = speechSynthesis.getVoices();
+
+    // Ưu tiên giọng tiếng Việt chuẩn
+    let vietnameseVoice =
+        voices.find(v => v.lang === "vi-VN" && v.name.includes("Vietnam")) ||
+        voices.find(v => v.lang === "vi-VN");
+
     introSpeech = new SpeechSynthesisUtterance(
-        "Chào mừng bạn đến với game của Hải Đặng. Nhận làm web, chạy mạng xã hội, Facebook Vũ Đình Hoàng."
+        "Chào mừng bạn đến với game của Hải Đặng. Nhận làm web, chạy mạng xã hội, Facebook Vũ Đình Nam."
     );
+
+    if(vietnameseVoice){
+        introSpeech.voice = vietnameseVoice;
+    }
+
     introSpeech.lang = "vi-VN";
-    introSpeech.rate = 1;
+    introSpeech.rate = 0.85;   // nói chậm hơn cho rõ
     introSpeech.pitch = 1;
+    introSpeech.volume = 1;
 
     introSpeech.onend = function(){
-        speakLoop();
+        speakLoop(); // lặp lại sau khi nói xong
     };
 
     speechSynthesis.speak(introSpeech);
@@ -147,10 +159,11 @@ function speakLoop(){
 document.getElementById("startBtn").addEventListener("click", function(){
     document.getElementById("startScreen").style.display = "none";
     document.getElementById("introScreen").style.display = "flex";
+    speechSynthesis.cancel();
     speakLoop();
 });
 
-/* ===== BỎ QUA → CHẠY GAME ===== */
+/* ===== BỎ QUA → GAME ===== */
 document.getElementById("skipBtn").addEventListener("click", function(){
 
     speechSynthesis.cancel(); // dừng nói ngay
