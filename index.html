@@ -50,12 +50,13 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 let bird = { x: 80, y: 300, radius: 15, velocity: 0 };
-let gravity = 0.5;
-let lift = -8;
+
+let gravity = 0.3;   // Rơi chậm hơn
+let lift = -6;       // Nhảy nhẹ hơn
 
 let pipes = [];
 let pipeWidth = 60;
-let gap = 150;
+let gap = 160;
 
 let score = 0;
 let gameRunning = true;
@@ -78,7 +79,7 @@ function drawBird(){
 }
 
 function createPipe(){
-    let topHeight = Math.random() * 300 + 50;
+    let topHeight = Math.random() * 250 + 80;
     pipes.push({
         x: canvas.width,
         top: topHeight,
@@ -87,7 +88,9 @@ function createPipe(){
 }
 
 function drawPipes(){
-    pipes.forEach(pipe => {
+    for(let i = pipes.length - 1; i >= 0; i--){
+        let pipe = pipes[i];
+
         ctx.fillStyle = "green";
         ctx.fillRect(pipe.x, 0, pipeWidth, pipe.top);
         ctx.fillRect(pipe.x, pipe.bottom, pipeWidth, canvas.height);
@@ -95,12 +98,11 @@ function drawPipes(){
         pipe.x -= 2;
 
         if(pipe.x + pipeWidth < 0){
-            pipes.shift();
+            pipes.splice(i,1);
             score++;
             document.getElementById("score").innerText = score;
         }
 
-        // collision
         if(
             bird.x + bird.radius > pipe.x &&
             bird.x - bird.radius < pipe.x + pipeWidth &&
@@ -109,7 +111,7 @@ function drawPipes(){
         ){
             gameOver();
         }
-    });
+    }
 }
 
 function gameOver(){
