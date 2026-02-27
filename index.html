@@ -3,88 +3,133 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HAIDANG-IOS</title>
+<title>Game Bầu Cua - HAIDANG</title>
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
 body {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #FF7A00, #FF3D00);
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff7a00, #ff3d00);
     color: white;
     text-align: center;
 }
 
-/* Glass Card */
-.container {
-    background: rgba(255, 255, 255, 0.15);
-    padding: 60px 80px;
-    border-radius: 25px;
-    backdrop-filter: blur(15px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-    animation: fadeIn 1s ease-in-out;
-}
-
 h1 {
-    font-size: 55px;
-    letter-spacing: 2px;
-    margin-bottom: 15px;
+    margin-top: 20px;
 }
 
-p {
-    font-size: 20px;
-    opacity: 0.9;
-    margin-bottom: 30px;
+.menu {
+    margin: 20px;
 }
 
 button {
-    padding: 15px 35px;
+    padding: 10px 20px;
+    margin: 5px;
     border: none;
-    border-radius: 30px;
-    font-size: 16px;
-    font-weight: bold;
+    border-radius: 10px;
     cursor: pointer;
+    font-weight: bold;
+}
+
+.bet-btn {
     background: white;
-    color: #FF3D00;
-    transition: 0.3s ease;
+    color: #ff3d00;
 }
 
-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+#rollBtn {
+    background: yellow;
+    color: black;
 }
 
-/* Animation */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.item {
+    background: rgba(255,255,255,0.2);
+    padding: 20px;
+    border-radius: 15px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.result {
+    margin-top: 20px;
+    font-size: 24px;
 }
 </style>
-
 </head>
+
 <body>
 
-<div class="container">
-    <h1>HAIDANG-IOS</h1>
-    <p>iOS Developer | Swift | SwiftUI</p>
-    <button onclick="alert('Chào mừng bạn đến với HAIDANG-IOS 🚀')">
-        View Projects
-    </button>
+<h1>🎮 GAME BẦU CUA 🎮</h1>
+
+<div class="menu">
+    💰 Tiền: <span id="money">1000</span>
 </div>
+
+<div class="board">
+    <div class="item" onclick="selectBet('🐟')">🐟</div>
+    <div class="item" onclick="selectBet('🦀')">🦀</div>
+    <div class="item" onclick="selectBet('🦌')">🦌</div>
+    <div class="item" onclick="selectBet('🐔')">🐔</div>
+    <div class="item" onclick="selectBet('🍐')">🍐</div>
+    <div class="item" onclick="selectBet('🍺')">🍺</div>
+</div>
+
+<br>
+<button id="rollBtn" onclick="rollDice()">🎲 LẮC</button>
+
+<div class="result" id="result"></div>
+
+<script>
+let money = 1000;
+let betItem = null;
+let betAmount = 100;
+
+const items = ['🐟','🦀','🦌','🐔','🍐','🍺'];
+
+function selectBet(item){
+    betItem = item;
+    alert("Bạn đã chọn: " + item);
+}
+
+function rollDice(){
+    if(!betItem){
+        alert("Hãy chọn con trước!");
+        return;
+    }
+
+    if(money < betAmount){
+        alert("Hết tiền!");
+        return;
+    }
+
+    let results = [];
+    for(let i=0;i<3;i++){
+        let random = items[Math.floor(Math.random()*items.length)];
+        results.push(random);
+    }
+
+    let winCount = results.filter(r => r === betItem).length;
+
+    money -= betAmount;
+
+    if(winCount > 0){
+        let winMoney = betAmount * winCount;
+        money += winMoney * 2;
+    }
+
+    document.getElementById("money").innerText = money;
+    document.getElementById("result").innerText =
+        "Kết quả: " + results.join(" ") + 
+        (winCount>0 ? " 🎉 Bạn thắng!" : " ❌ Bạn thua!");
+}
+</script>
 
 </body>
 </html>
