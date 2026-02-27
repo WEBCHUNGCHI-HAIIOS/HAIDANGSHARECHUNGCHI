@@ -99,14 +99,13 @@ let gap = 220;
 let score = 0;
 let gameRunning = false;
 
-/* ===== ÂM THANH ===== */
-let jumpSound = new Audio("jump.mp3");
-let dieSound = new Audio("jump.mp3");
-
-/* ===== NHẠC NỀN TỰ LẶP ===== */
-let bgMusic = new Audio("jump.mp3"); 
+/* ===== ÂM THANH (ĐÃ SỬA KHÔNG GIẬT) ===== */
+let bgMusic = new Audio("music.mp3");
 bgMusic.loop = true;
-/* ===================== */
+
+let jumpSound = new Audio("jump.mp3");
+let dieSound = new Audio("die.mp3");
+/* ======================================== */
 
 let birdImg = new Image();
 birdImg.src = "chim.png";
@@ -127,6 +126,7 @@ function resetGame(){
 function jump(){
     if(gameRunning){
         bird.velocity = lift;
+
         jumpSound.currentTime = 0;
         jumpSound.play();
     }
@@ -191,8 +191,10 @@ function drawPipes(){
 
 function gameOver(){
     gameRunning = false;
+
     dieSound.currentTime = 0;
     dieSound.play();
+
     document.getElementById("gameOver").style.display = "block";
 }
 
@@ -236,7 +238,6 @@ document.getElementById("jumpBtn").addEventListener("click", jump);
 document.getElementById("startBtn").addEventListener("click", function(){
     document.getElementById("startScreen").style.display = "none";
 
-    /* CHẠY NHẠC NỀN */
     bgMusic.currentTime = 0;
     bgMusic.play();
 
