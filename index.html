@@ -99,13 +99,17 @@ let gap = 220;
 let score = 0;
 let gameRunning = false;
 
-/* ===== ÂM THANH (ĐÃ SỬA KHÔNG GIẬT) ===== */
+/* ===== ÂM THANH SỬA CHUẨN ===== */
 let bgMusic = new Audio("music.mp3");
 bgMusic.loop = true;
+bgMusic.volume = 0.5;
 
 let jumpSound = new Audio("jump.mp3");
+jumpSound.volume = 0.7;
+
 let dieSound = new Audio("die.mp3");
-/* ======================================== */
+dieSound.volume = 0.7;
+/* ============================== */
 
 let birdImg = new Image();
 birdImg.src = "chim.png";
@@ -126,9 +130,7 @@ function resetGame(){
 function jump(){
     if(gameRunning){
         bird.velocity = lift;
-
-        jumpSound.currentTime = 0;
-        jumpSound.play();
+        jumpSound.play();   // không reset nhạc nền nữa
     }
 }
 
@@ -191,10 +193,7 @@ function drawPipes(){
 
 function gameOver(){
     gameRunning = false;
-
-    dieSound.currentTime = 0;
     dieSound.play();
-
     document.getElementById("gameOver").style.display = "block";
 }
 
@@ -238,8 +237,7 @@ document.getElementById("jumpBtn").addEventListener("click", jump);
 document.getElementById("startBtn").addEventListener("click", function(){
     document.getElementById("startScreen").style.display = "none";
 
-    bgMusic.currentTime = 0;
-    bgMusic.play();
+    bgMusic.play();   // chỉ chạy 1 lần khi start
 
     resetGame();
     update();
