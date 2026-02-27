@@ -10,35 +10,29 @@ body {
     font-family: Arial;
     text-align: center;
 }
+
 canvas {
     background: #70c5ce;
     display: block;
     margin: 20px auto;
+    width: 400px;
+    height: 600px;
+    max-width: 100%;
 }
+
 #score {
     font-size: 28px;
     color: white;
     font-weight: bold;
 }
+
 #gameOver {
     font-size: 32px;
     color: red;
     display: none;
     margin: 10px;
 }
-#jumpBtn {
-    padding: 15px 40px;
-    font-size: 20px;
-    border: none;
-    border-radius: 15px;
-    background: yellow;
-    cursor: pointer;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-#jumpBtn:hover {
-    background: orange;
-}
+
 #startScreen, #introScreen{
     position:fixed;
     width:100%;
@@ -51,15 +45,18 @@ canvas {
     top:0;
     left:0;
 }
+
 #introScreen{
     display:none;
 }
+
 .bigTitle{
     font-size:48px;
     color:yellow;
     text-shadow:3px 3px black;
     margin-bottom:40px;
 }
+
 .bigBtn{
     padding:20px 60px;
     font-size:28px;
@@ -70,6 +67,7 @@ canvas {
     font-weight:bold;
     cursor:pointer;
 }
+
 #introText{
     width:70%;
     min-height:80px;
@@ -81,13 +79,11 @@ canvas {
 </head>
 <body>
 
-<!-- START SCREEN -->
 <div id="startScreen">
     <div class="bigTitle">FLAPPY BIRD</div>
     <button id="startBtn" class="bigBtn">START</button>
 </div>
 
-<!-- INTRO SCREEN -->
 <div id="introScreen">
     <div class="bigTitle">Giới thiệu</div>
     <div id="introText"></div>
@@ -98,7 +94,6 @@ canvas {
 <div id="gameOver">GAME OVER<br>Click để chơi lại</div>
 
 <canvas id="gameCanvas" width="400" height="600"></canvas>
-<button id="jumpBtn">⬆ NHẢY</button>
 
 <script>
 const canvas = document.getElementById("gameCanvas");
@@ -160,7 +155,6 @@ function speakLoop(){
     speechSynthesis.speak(introSpeech);
 }
 
-/* ===== START → INTRO ===== */
 document.getElementById("startBtn").addEventListener("click", function(){
     document.getElementById("startScreen").style.display = "none";
     document.getElementById("introScreen").style.display = "flex";
@@ -172,13 +166,9 @@ document.getElementById("startBtn").addEventListener("click", function(){
     speakLoop();
 });
 
-/* ===== BỎ QUA → CHẠY GAME ===== */
 document.getElementById("skipBtn").addEventListener("click", function(){
-
     speechSynthesis.cancel();
-
     document.getElementById("introScreen").style.display = "none";
-
     bgMusic.play();
     resetGame();
     update();
@@ -272,13 +262,14 @@ function update(){
 
 setInterval(createPipe, 2000);
 
+/* ===== CHẠM MÀN HÌNH LÀ BAY ===== */
 document.addEventListener("keydown", e => {
     if(e.code === "Space"){
         jump();
     }
 });
 
-canvas.addEventListener("click", () => {
+document.addEventListener("click", () => {
     if(!gameRunning){
         resetGame();
         update();
@@ -287,8 +278,15 @@ canvas.addEventListener("click", () => {
     }
 });
 
-document.getElementById("jumpBtn").addEventListener("click", jump);
-
+document.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    if(!gameRunning){
+        resetGame();
+        update();
+    } else {
+        jump();
+    }
+});
 </script>
 </body>
 </html>
