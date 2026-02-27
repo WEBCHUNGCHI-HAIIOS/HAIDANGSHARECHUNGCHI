@@ -39,7 +39,7 @@ canvas {
 #jumpBtn:hover {
     background: orange;
 }
-#startScreen{
+#startScreen, #introScreen{
     position:fixed;
     width:100%;
     height:100%;
@@ -51,13 +51,16 @@ canvas {
     top:0;
     left:0;
 }
-#startTitle{
+#introScreen{
+    display:none;
+}
+.bigTitle{
     font-size:48px;
     color:yellow;
     text-shadow:3px 3px black;
     margin-bottom:40px;
 }
-#startBtn{
+.bigBtn{
     padding:20px 60px;
     font-size:28px;
     border:none;
@@ -71,16 +74,22 @@ canvas {
 </head>
 <body>
 
+<!-- START SCREEN -->
 <div id="startScreen">
-    <div id="startTitle">FLAPPY BIRD</div>
-    <button id="startBtn">START</button>
+    <div class="bigTitle">FLAPPY BIRD</div>
+    <button id="startBtn" class="bigBtn">START</button>
+</div>
+
+<!-- INTRO SCREEN -->
+<div id="introScreen">
+    <div class="bigTitle">Giới thiệu</div>
+    <button id="skipBtn" class="bigBtn">BỎ QUA</button>
 </div>
 
 <div id="score">0</div>
 <div id="gameOver">GAME OVER<br>Click để chơi lại</div>
 
 <canvas id="gameCanvas" width="400" height="600"></canvas>
-
 <button id="jumpBtn">⬆ NHẢY</button>
 
 <script>
@@ -88,7 +97,6 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 let bird = { x: 80, y: 300, velocity: 0 };
-
 let gravity = 0.3;
 let lift = -6;
 
@@ -117,30 +125,28 @@ birdImg.src = "chim.png";
 let pipeImg = new Image();
 pipeImg.src = "ong.png";
 
-/* ===== GIỌNG CHÀO ===== */
-function speakWelcome(){
+/* ===== START → INTRO ===== */
+document.getElementById("startBtn").addEventListener("click", function(){
+    document.getElementById("startScreen").style.display = "none";
+    document.getElementById("introScreen").style.display = "flex";
+
+    // Giọng nói ở màn hình giới thiệu
     let msg = new SpeechSynthesisUtterance(
-        "Chào mừng bạn đến với game của Hải Đặng. Nhận làm web, chạy mạng xã hội, Facebook Vũ Đình Hoàng."
+        "Chào mừng bạn đến với game của Hải Đặng. Nhận làm web, chạy mạng xã hội, Facebook Vũ Đình Nam."
     );
     msg.lang = "vi-VN";
     msg.rate = 1;
     msg.pitch = 1;
     speechSynthesis.speak(msg);
-}
-
-// Thử nói khi vừa mở web
-window.addEventListener("load", function(){
-    setTimeout(function(){
-        speakWelcome();
-    }, 500);
 });
 
-// Nếu bị chặn thì click lần đầu sẽ nói
-document.body.addEventListener("click", function once(){
-    speakWelcome();
-    document.body.removeEventListener("click", once);
+/* ===== BỎ QUA → CHẠY GAME ===== */
+document.getElementById("skipBtn").addEventListener("click", function(){
+    document.getElementById("introScreen").style.display = "none";
+    bgMusic.play();
+    resetGame();
+    update();
 });
-/* ====================== */
 
 function resetGame(){
     bird.y = 300;
@@ -160,13 +166,7 @@ function jump(){
 }
 
 function drawBird(){
-    ctx.drawImage(
-        birdImg,
-        bird.x - 20,
-        bird.y - 20,
-        40,
-        40
-    );
+    ctx.drawImage(birdImg, bird.x - 20, bird.y - 20, 40, 40);
 }
 
 function createPipe(){
@@ -189,13 +189,7 @@ function drawPipes(){
         ctx.drawImage(pipeImg, -pipeWidth/2, 0, pipeWidth, pipe.top);
         ctx.restore();
 
-        ctx.drawImage(
-            pipeImg,
-            pipe.x,
-            pipe.bottom,
-            pipeWidth,
-            canvas.height - pipe.bottom
-        );
+        ctx.drawImage(pipeImg, pipe.x, pipe.bottom, pipeWidth, canvas.height - pipe.bottom);
 
         pipe.x -= 2;
 
@@ -259,13 +253,6 @@ canvas.addEventListener("click", () => {
 
 document.getElementById("jumpBtn").addEventListener("click", jump);
 
-document.getElementById("startBtn").addEventListener("click", function(){
-    document.getElementById("startScreen").style.display = "none";
-    bgMusic.play();
-    resetGame();
-    update();
-});
 </script>
-
 </body>
 </html>
