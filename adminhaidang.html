@@ -9,10 +9,21 @@
 body{
 margin:0;
 font-family:Arial;
-background:linear-gradient(135deg,#1e3c72,#2a5298);
+background:black;
 height:100vh;
 overflow:hidden;
 display:flex;
+}
+
+/* canvas nền sao */
+
+#space{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:0;
 }
 
 /* màn hình giới thiệu */
@@ -44,7 +55,7 @@ color:white;
 cursor:pointer;
 }
 
-/* khu vực web bên trái */
+/* chữ bên trái */
 
 .left{
 flex:1;
@@ -55,6 +66,7 @@ color:white;
 font-size:40px;
 font-weight:bold;
 text-align:center;
+z-index:2;
 }
 
 /* chữ phát sáng */
@@ -71,17 +83,10 @@ animation:glow 2s infinite alternate;
 
 @keyframes glow{
 from{
-text-shadow:
-0 0 5px white,
-0 0 10px white,
-0 0 20px #00ffff;
+text-shadow:0 0 5px white,0 0 10px white,0 0 20px #00ffff;
 }
 to{
-text-shadow:
-0 0 10px white,
-0 0 20px #00ffff,
-0 0 40px #00ffff,
-0 0 60px #00ffff;
+text-shadow:0 0 10px white,0 0 20px #00ffff,0 0 40px #00ffff,0 0 60px #00ffff;
 }
 }
 
@@ -104,9 +109,7 @@ animation:shine 3s infinite;
 }
 
 @keyframes shine{
-100%{
-left:150%;
-}
+100%{ left:150%; }
 }
 
 /* đồng hồ */
@@ -146,6 +149,7 @@ top:-10px;
 color:white;
 font-size:10px;
 animation:fall linear infinite;
+z-index:3;
 }
 
 @keyframes fall{
@@ -158,6 +162,8 @@ transform:translateY(100vh);
 </head>
 
 <body>
+
+<canvas id="space"></canvas>
 
 <audio id="nhac" loop>
 <source src="nhac.mp3" type="audio/mpeg">
@@ -180,7 +186,8 @@ DONE 1S
 
 <div id="ai-bot-kit-chatbot" data-chatbot-id="ba1c1769-2922-44"></div>
 
-<a href="https://www.facebook.com/ADMINGDTGDINHHOANG" target="_blank" style="position:fixed;left:20px;bottom:20px;background:#1877f2;color:white;padding:12px 18px;border-radius:25px;font-weight:bold;text-decoration:none;box-shadow:0 4px 10px rgba(0,0,0,0.3);z-index:9999;">
+<a href="https://www.facebook.com/ADMINGDTGDINHHOANG" target="_blank"
+style="position:fixed;left:20px;bottom:20px;background:#1877f2;color:white;padding:12px 18px;border-radius:25px;font-weight:bold;text-decoration:none;box-shadow:0 4px 10px rgba(0,0,0,0.3);z-index:9999;">
 FB: ADMIN
 </a>
 
@@ -190,38 +197,32 @@ FB: ADMIN
 
 <script>
 
+/* mở web */
+
 function vaoWeb(){
 document.getElementById("intro").style.display="none"
 document.getElementById("nhac").play()
 }
 
+/* mở bot */
+
 function openBot(){
 let btn=document.querySelector(".ai-botkit-button")
-if(btn){
-btn.click()
-}else{
-setTimeout(openBot,300)
-}
+if(btn){btn.click()}
+else{setTimeout(openBot,300)}
 }
 openBot()
 
 /* tuyết */
 
 function snow(){
-
 let snow=document.createElement("div")
-
 snow.className="snow"
 snow.innerHTML="❄"
 snow.style.left=Math.random()*window.innerWidth+"px"
 snow.style.animationDuration=(Math.random()*3+2)+"s"
-
 document.body.appendChild(snow)
-
-setTimeout(()=>{
-snow.remove()
-},5000)
-
+setTimeout(()=>{snow.remove()},5000)
 }
 
 setInterval(snow,40)
@@ -229,25 +230,64 @@ setInterval(snow,40)
 /* đồng hồ */
 
 function updateClock(){
-
 let now=new Date()
-
 let h=String(now.getHours()).padStart(2,"0")
 let m=String(now.getMinutes()).padStart(2,"0")
 let s=String(now.getSeconds()).padStart(2,"0")
-
 let d=now.getDate()
 let mo=now.getMonth()+1
 let y=now.getFullYear()
-
 document.getElementById("clock").innerHTML=
 h+":"+m+":"+s+" | "+d+"/"+mo+"/"+y
-
 }
 
 setInterval(updateClock,1000)
-
 updateClock()
+
+/* nền sao vũ trụ */
+
+const canvas=document.getElementById("space")
+const ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+let stars=[]
+
+for(let i=0;i<200;i++){
+stars.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*2,
+speed:Math.random()*0.5
+})
+}
+
+function drawStars(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="white"
+
+stars.forEach(s=>{
+ctx.beginPath()
+ctx.arc(s.x,s.y,s.size,0,Math.PI*2)
+ctx.fill()
+
+s.y+=s.speed
+
+if(s.y>canvas.height){
+s.y=0
+s.x=Math.random()*canvas.width
+}
+
+})
+
+requestAnimationFrame(drawStars)
+
+}
+
+drawStars()
 
 </script>
 
