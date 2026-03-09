@@ -54,6 +54,7 @@ align-items:center;
 color:white;
 font-size:40px;
 font-weight:bold;
+text-align:center;
 }
 
 /* chữ phát sáng */
@@ -84,7 +85,45 @@ text-shadow:
 }
 }
 
-/* chatbot nửa màn hình */
+/* ánh sáng chạy */
+
+.shine{
+position:relative;
+overflow:hidden;
+}
+
+.shine::after{
+content:"";
+position:absolute;
+top:0;
+left:-100%;
+width:50%;
+height:100%;
+background:linear-gradient(120deg,transparent,rgba(255,255,255,0.8),transparent);
+animation:shine 3s infinite;
+}
+
+@keyframes shine{
+100%{
+left:150%;
+}
+}
+
+/* đồng hồ */
+
+#clock{
+position:fixed;
+top:20px;
+left:50%;
+transform:translateX(-50%);
+color:white;
+font-size:18px;
+font-weight:bold;
+z-index:9999;
+text-shadow:0 0 10px #00ffff;
+}
+
+/* chatbot */
 
 #ai-bot-kit-chatbot{
 position:fixed;
@@ -94,8 +133,6 @@ width:50vw;
 height:100vh;
 z-index:9999;
 }
-
-/* ẩn nút */
 
 .ai-botkit-button{
 display:none !important;
@@ -122,60 +159,50 @@ transform:translateY(100vh);
 
 <body>
 
-<!-- NHẠC -->
 <audio id="nhac" loop>
 <source src="nhac.mp3" type="audio/mpeg">
 </audio>
 
-<!-- MÀN HÌNH GIỚI THIỆU -->
 <div id="intro">
 <h1>Chào mừng đến với TRANG CHU ADMIN HAIDANG</h1>
 <p>Web được tạo bởi ADMINHAIDANG</p>
 <button onclick="vaoWeb()">Vào Trang Chủ</button>
 </div>
 
-<div class="left glow">
-    THONG TIN ADMIN HAIDANG
-  ĐƯỢC ADMINVIET CHỨNG MINMH
-     ĐỘ UY TÍN VÀ MINH BẠCH 
-    QUỸ BẢO HIỂM 15.000.000
-  NHẬN GDTG-GT-DT-THU SELL All
-            DONE 1S
+<div class="left glow shine">
+THONG TIN ADMIN HAIDANG <br>
+ĐƯỢC ADMINVIET CHỨNG MINH <br>
+ĐỘ UY TÍN VÀ MINH BẠCH <br>
+QUỸ BẢO HIỂM 15.000.000 <br>
+NHẬN GDTG-GT-DT-THU SELL ALL <br>
+DONE 1S
 </div>
 
-<!-- BOT -->
 <div id="ai-bot-kit-chatbot" data-chatbot-id="ba1c1769-2922-44"></div>
 
-<!-- NÚT FACEBOOK -->
 <a href="https://www.facebook.com/ADMINGDTGDINHHOANG" target="_blank" style="position:fixed;left:20px;bottom:20px;background:#1877f2;color:white;padding:12px 18px;border-radius:25px;font-weight:bold;text-decoration:none;box-shadow:0 4px 10px rgba(0,0,0,0.3);z-index:9999;">
 FB: ADMIN
 </a>
 
+<div id="clock"></div>
+
 <script src="https://app.aibotkit.io/embed.js"></script>
 
 <script>
-
-/* vào web + phát nhạc */
 
 function vaoWeb(){
 document.getElementById("intro").style.display="none"
 document.getElementById("nhac").play()
 }
 
-/* tự mở bot */
-
 function openBot(){
-
 let btn=document.querySelector(".ai-botkit-button")
-
 if(btn){
 btn.click()
 }else{
 setTimeout(openBot,300)
 }
-
 }
-
 openBot()
 
 /* tuyết */
@@ -197,9 +224,30 @@ snow.remove()
 
 }
 
-/* TUYẾT DÀY HƠN */
-
 setInterval(snow,40)
+
+/* đồng hồ */
+
+function updateClock(){
+
+let now=new Date()
+
+let h=String(now.getHours()).padStart(2,"0")
+let m=String(now.getMinutes()).padStart(2,"0")
+let s=String(now.getSeconds()).padStart(2,"0")
+
+let d=now.getDate()
+let mo=now.getMonth()+1
+let y=now.getFullYear()
+
+document.getElementById("clock").innerHTML=
+h+":"+m+":"+s+" | "+d+"/"+mo+"/"+y
+
+}
+
+setInterval(updateClock,1000)
+
+updateClock()
 
 </script>
 
