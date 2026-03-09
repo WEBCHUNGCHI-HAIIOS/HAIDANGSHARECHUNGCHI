@@ -99,27 +99,15 @@ transform:translateY(100vh);
 
 <body>
 
-<div class="chatbox">
-
-<div class="header">
-🤖 AI Bạn Đồng Hành
-</div>
-
-<div class="messages">
-<div class="msg bot">
-Xin chào 👋 Tôi là AI. Hãy nhắn tin cho tôi!
-</div>
-</div>
-
-</div>
-
-<!-- Chatbot BotKit -->
+<!-- Chatbot -->
 <div id="ai-bot-kit-chatbot" data-chatbot-id="ba1c1769-2922-44"></div>
 <script src="https://app.aibotkit.io/embed.js" async defer></script>
 
 <script>
 function snow(){
+
 let snow=document.createElement("div")
+
 snow.className="snow"
 snow.innerHTML="❄"
 snow.style.left=Math.random()*window.innerWidth+"px"
@@ -127,10 +115,14 @@ snow.style.animationDuration=(Math.random()*3+2)+"s"
 
 document.body.appendChild(snow)
 
-setTimeout(()=>{snow.remove()},5000)
+setTimeout(()=>{
+snow.remove()
+},5000)
+
 }
 
 setInterval(snow,120)
+
 </script>
 
 </body>
