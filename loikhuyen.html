@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Lời khuyên cho tôi</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Arial;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    color:white;
+    text-align:center;
+}
+
+.box{
+    background:rgba(255,255,255,0.15);
+    padding:40px;
+    border-radius:20px;
+    backdrop-filter:blur(10px);
+    width:70%;
+}
+
+button{
+    margin-top:20px;
+    padding:12px 25px;
+    font-size:18px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h1>💪 Lời khuyên cho tôi</h1>
+
+<p id="text">Bấm nút bên dưới để nhận lời khuyên.</p>
+
+<button onclick="loikhuyen()">Nhận lời khuyên</button>
+</div>
+
+<script>
+
+let list = [
+
+"Học hôm nay là đầu tư cho tương lai của chính mình.",
+
+"Không ai sinh ra đã giỏi, chỉ có người cố gắng nhiều hơn.",
+
+"Bạn nghèo hôm nay không có nghĩa là bạn nghèo mãi.",
+
+"Hãy cố gắng học tập để sau này không phải hối hận.",
+
+"Mỗi ngày học thêm một chút, tương lai sẽ thay đổi.",
+
+"Đừng so sánh mình với người giàu, hãy so mình với ngày hôm qua.",
+
+"Khó khăn hôm nay là sức mạnh của ngày mai.",
+
+"Người kiên trì luôn đi xa hơn người bỏ cuộc.",
+
+"Học lớp 8 hôm nay có thể quyết định cuộc đời sau này.",
+
+"Không ai cứu bạn ngoài chính bạn."
+
+]
+
+function loikhuyen(){
+
+let random = list[Math.floor(Math.random()*list.length)]
+
+document.getElementById("text").innerText = random
+
+let speech = new SpeechSynthesisUtterance(random)
+speech.lang = "vi-VN"
+speechSynthesis.speak(speech)
+
+}
+
+</script>
+
+</body>
+</html>
