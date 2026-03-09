@@ -2,87 +2,147 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Lời khuyên cho tôi</title>
+<title>Động Lực Học Tập</title>
 
 <style>
+
 body{
-    margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-family:Arial;
-    background:linear-gradient(135deg,#667eea,#764ba2);
-    color:white;
-    text-align:center;
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:Arial;
+color:white;
+text-align:center;
+background:linear-gradient(135deg,#1e3c72,#2a5298);
+overflow:hidden;
 }
 
 .box{
-    background:rgba(255,255,255,0.15);
-    padding:40px;
-    border-radius:20px;
-    backdrop-filter:blur(10px);
-    width:70%;
+background:rgba(255,255,255,0.15);
+padding:40px;
+border-radius:20px;
+backdrop-filter:blur(10px);
+width:70%;
+box-shadow:0 0 30px rgba(0,0,0,0.3);
+}
+
+h1{
+font-size:40px;
+}
+
+p{
+font-size:22px;
 }
 
 button{
-    margin-top:20px;
-    padding:12px 25px;
-    font-size:18px;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
+
+margin-top:20px;
+padding:15px 30px;
+font-size:18px;
+border:none;
+border-radius:15px;
+cursor:pointer;
+background:#ffcc00;
+font-weight:bold;
+
 }
+
+button:hover{
+background:#ffd633;
+}
+
+.snow{
+position:fixed;
+top:-10px;
+color:white;
+font-size:10px;
+animation:fall linear infinite;
+}
+
+@keyframes fall{
+to{
+transform:translateY(100vh);
+}
+}
+
 </style>
 </head>
 
 <body>
 
 <div class="box">
-<h1>💪 Lời khuyên cho tôi</h1>
 
-<p id="text">Bấm nút bên dưới để nhận lời khuyên.</p>
+<h1>🔥 Động lực học tập</h1>
+
+<p id="text">Hãy bấm nút để nhận một lời khuyên.</p>
 
 <button onclick="loikhuyen()">Nhận lời khuyên</button>
+
 </div>
 
 <script>
 
-let list = [
+let list=[
 
-"Học hôm nay là đầu tư cho tương lai của chính mình.",
-
-"Không ai sinh ra đã giỏi, chỉ có người cố gắng nhiều hơn.",
-
-"Bạn nghèo hôm nay không có nghĩa là bạn nghèo mãi.",
-
-"Hãy cố gắng học tập để sau này không phải hối hận.",
-
-"Mỗi ngày học thêm một chút, tương lai sẽ thay đổi.",
-
-"Đừng so sánh mình với người giàu, hãy so mình với ngày hôm qua.",
-
-"Khó khăn hôm nay là sức mạnh của ngày mai.",
-
-"Người kiên trì luôn đi xa hơn người bỏ cuộc.",
-
-"Học lớp 8 hôm nay có thể quyết định cuộc đời sau này.",
-
-"Không ai cứu bạn ngoài chính bạn."
+"Học hôm nay để ngày mai không hối hận.",
+"Không ai sinh ra đã giỏi, chỉ có người luyện tập nhiều.",
+"Khó khăn hôm nay là sức mạnh ngày mai.",
+"Đừng bỏ cuộc khi bạn còn có thể cố gắng.",
+"Người thành công là người không bỏ cuộc.",
+"Học tập là con đường ngắn nhất để thay đổi cuộc đời.",
+"Nếu bạn nghèo hôm nay, hãy học để thay đổi tương lai.",
+"Kiên trì mỗi ngày sẽ tạo nên điều lớn lao.",
+"Đừng so sánh mình với người khác, hãy so với ngày hôm qua.",
+"Hãy cố gắng để sau này tự hào về chính mình.",
+"Không ai giúp bạn nếu bạn không tự giúp mình.",
+"Mỗi ngày học thêm một chút là một bước gần hơn tới thành công.",
+"Đừng lãng phí tuổi trẻ.",
+"Học tập là đầu tư cho tương lai.",
+"Người kiên trì luôn đi xa hơn người thông minh nhưng lười.",
+"Chỉ cần không bỏ cuộc bạn đã hơn rất nhiều người.",
+"Hãy học vì ước mơ của mình.",
+"Ngày hôm nay cố gắng, ngày mai sẽ khác.",
+"Một ngày lười biếng là một ngày mất cơ hội.",
+"Thành công bắt đầu từ sự cố gắng nhỏ nhất."
 
 ]
 
 function loikhuyen(){
 
-let random = list[Math.floor(Math.random()*list.length)]
+let random=list[Math.floor(Math.random()*list.length)]
 
-document.getElementById("text").innerText = random
+document.getElementById("text").innerText=random
 
-let speech = new SpeechSynthesisUtterance(random)
-speech.lang = "vi-VN"
+let speech=new SpeechSynthesisUtterance(random)
+speech.lang="vi-VN"
+
 speechSynthesis.speak(speech)
 
 }
+
+function snow(){
+
+let snow=document.createElement("div")
+
+snow.className="snow"
+
+snow.innerHTML="❄"
+
+snow.style.left=Math.random()*window.innerWidth+"px"
+
+snow.style.animationDuration=(Math.random()*3+2)+"s"
+
+document.body.appendChild(snow)
+
+setTimeout(()=>{
+snow.remove()
+},5000)
+
+}
+
+setInterval(snow,100)
 
 </script>
 
