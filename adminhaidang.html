@@ -86,11 +86,12 @@ FB: ADMIN
 
 <script>
 
-/* phát nhạc khi web mở */
-window.addEventListener("load", function(){
+/* phát nhạc khi bấm vào web */
+
+document.addEventListener("click",function(){
 let audio=document.getElementById("nhac");
-audio.play().catch(()=>{});
-});
+audio.play();
+},{once:true});
 
 /* tự mở bot */
 
