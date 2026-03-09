@@ -1,56 +1,88 @@
+```html
 <!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Động Lực Học Tập</title>
+<title>AI Bạn Đồng Hành</title>
 
 <style>
 
 body{
 margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#1e3c72,#2a5298);
 height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-font-family:Arial;
-color:white;
-text-align:center;
-background:linear-gradient(135deg,#1e3c72,#2a5298);
 overflow:hidden;
 }
 
-.box{
-background:rgba(255,255,255,0.15);
-padding:40px;
+.chatbox{
+
+width:420px;
+height:550px;
+background:white;
 border-radius:20px;
-backdrop-filter:blur(10px);
-width:70%;
-box-shadow:0 0 30px rgba(0,0,0,0.3);
+display:flex;
+flex-direction:column;
+overflow:hidden;
+box-shadow:0 0 30px rgba(0,0,0,0.4);
+
 }
 
-h1{
-font-size:40px;
+.header{
+background:#2a5298;
+color:white;
+padding:15px;
+text-align:center;
+font-size:20px;
 }
 
-p{
-font-size:22px;
+.messages{
+flex:1;
+padding:15px;
+overflow:auto;
+background:#f4f6fb;
+}
+
+.msg{
+margin:10px 0;
+max-width:70%;
+padding:10px;
+border-radius:10px;
+}
+
+.user{
+margin-left:auto;
+background:#2a5298;
+color:white;
+}
+
+.bot{
+background:#e5e5ea;
+}
+
+.inputbox{
+display:flex;
+border-top:1px solid #ddd;
+}
+
+input{
+flex:1;
+padding:12px;
+border:none;
+font-size:16px;
+outline:none;
 }
 
 button{
-
-margin-top:20px;
-padding:15px 30px;
-font-size:18px;
+width:80px;
 border:none;
-border-radius:15px;
+background:#2a5298;
+color:white;
+font-size:16px;
 cursor:pointer;
-background:#ffcc00;
-font-weight:bold;
-
-}
-
-button:hover{
-background:#ffd633;
 }
 
 .snow{
@@ -72,50 +104,100 @@ transform:translateY(100vh);
 
 <body>
 
-<div class="box">
+<div class="chatbox">
 
-<h1>🔥 Động lực học tập</h1>
+<div class="header">
+🤖 AI Bạn Đồng Hành
+</div>
 
-<p id="text">Hãy bấm nút để nhận một lời khuyên.</p>
+<div class="messages" id="messages">
 
-<button onclick="loikhuyen()">Nhận lời khuyên</button>
+<div class="msg bot">
+Xin chào 👋 Tôi là AI động lực. Bạn muốn tâm sự gì?
+</div>
+
+</div>
+
+<div class="inputbox">
+<input id="input" placeholder="Nhắn tin..." />
+<button onclick="send()">Gửi</button>
+</div>
 
 </div>
 
 <script>
 
-let list=[
+let input=document.getElementById("input")
 
-"Học hôm nay để ngày mai không hối hận.",
-"Không ai sinh ra đã giỏi, chỉ có người luyện tập nhiều.",
-"Khó khăn hôm nay là sức mạnh ngày mai.",
-"Đừng bỏ cuộc khi bạn còn có thể cố gắng.",
-"Người thành công là người không bỏ cuộc.",
-"Học tập là con đường ngắn nhất để thay đổi cuộc đời.",
-"Nếu bạn nghèo hôm nay, hãy học để thay đổi tương lai.",
-"Kiên trì mỗi ngày sẽ tạo nên điều lớn lao.",
-"Đừng so sánh mình với người khác, hãy so với ngày hôm qua.",
-"Hãy cố gắng để sau này tự hào về chính mình.",
-"Không ai giúp bạn nếu bạn không tự giúp mình.",
-"Mỗi ngày học thêm một chút là một bước gần hơn tới thành công.",
-"Đừng lãng phí tuổi trẻ.",
-"Học tập là đầu tư cho tương lai.",
-"Người kiên trì luôn đi xa hơn người thông minh nhưng lười.",
-"Chỉ cần không bỏ cuộc bạn đã hơn rất nhiều người.",
-"Hãy học vì ước mơ của mình.",
-"Ngày hôm nay cố gắng, ngày mai sẽ khác.",
-"Một ngày lười biếng là một ngày mất cơ hội.",
-"Thành công bắt đầu từ sự cố gắng nhỏ nhất."
+input.addEventListener("keypress",function(e){
+if(e.key==="Enter") send()
+})
 
-]
+function send(){
 
-function loikhuyen(){
+let text=input.value.trim()
 
-let random=list[Math.floor(Math.random()*list.length)]
+if(text=="") return
 
-document.getElementById("text").innerText=random
+add("user",text)
 
-let speech=new SpeechSynthesisUtterance(random)
+let reply=bot(text)
+
+setTimeout(()=>{
+add("bot",reply)
+speak(reply)
+},500)
+
+input.value=""
+
+}
+
+function add(type,text){
+
+let box=document.getElementById("messages")
+
+let div=document.createElement("div")
+
+div.className="msg "+type
+
+div.innerText=text
+
+box.appendChild(div)
+
+box.scrollTop=box.scrollHeight
+
+}
+
+function bot(text){
+
+text=text.toLowerCase()
+
+if(text.includes("buồn"))
+return "Mình hiểu cảm giác đó. Nhưng khó khăn chỉ là tạm thời. Bạn mạnh mẽ hơn bạn nghĩ."
+
+if(text.includes("mệt"))
+return "Hãy nghỉ một chút rồi tiếp tục cố gắng nhé. Bạn đang làm rất tốt."
+
+if(text.includes("học"))
+return "Học hôm nay là để tương lai của bạn tốt hơn."
+
+if(text.includes("nghèo"))
+return "Nhiều người thành công từng rất nghèo. Điều quan trọng là bạn không bỏ cuộc."
+
+if(text.includes("bỏ cuộc"))
+return "Đừng bỏ cuộc. Người kiên trì luôn chiến thắng."
+
+if(text.includes("chào"))
+return "Chào bạn 👋 Hôm nay bạn cảm thấy thế nào?"
+
+return "Hãy tiếp tục cố gắng. Tương lai của bạn rất quan trọng."
+
+}
+
+function speak(text){
+
+let speech=new SpeechSynthesisUtterance(text)
+
 speech.lang="vi-VN"
 
 speechSynthesis.speak(speech)
@@ -142,9 +224,10 @@ snow.remove()
 
 }
 
-setInterval(snow,100)
+setInterval(snow,120)
 
 </script>
 
 </body>
 </html>
+```
