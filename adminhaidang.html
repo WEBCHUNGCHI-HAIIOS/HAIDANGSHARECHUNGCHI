@@ -2,79 +2,183 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Thong Tin Admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Chat</title>
 
 <style>
+
 body{
 margin:0;
 font-family:Arial;
-background:linear-gradient(135deg,#1e3c72,#2a5298);
-height:100vh;
-overflow:hidden;
+background:#0f172a;
+color:white;
 }
 
-/* ép chatbot chiếm nửa màn hình */
-#ai-bot-kit-chatbot{
+/* BOT NỬA MÀN HÌNH */
+
+#chatbot{
 position:fixed;
 right:0;
 top:0;
-width:50vw;
-height:100vh;
-z-index:9999;
+width:50%;
+height:100%;
+background:#111827;
+display:flex;
+flex-direction:column;
+border-left:2px solid #1f2937;
 }
 
-/* ẩn nút tròn */
-.ai-botkit-button{
-display:none !important;
+/* HEADER */
+
+#chat-header{
+padding:15px;
+background:#1f2937;
+font-size:18px;
+font-weight:bold;
 }
 
-.snow{
-position:fixed;
-top:-10px;
+/* MESSAGES */
+
+#messages{
+flex:1;
+overflow-y:auto;
+padding:15px;
+}
+
+/* MESSAGE */
+
+.message{
+margin-bottom:10px;
+padding:10px;
+border-radius:10px;
+max-width:80%;
+}
+
+.user{
+background:#2563eb;
+margin-left:auto;
+}
+
+.bot{
+background:#374151;
+}
+
+/* INPUT */
+
+#input-area{
+display:flex;
+border-top:1px solid #1f2937;
+}
+
+#input{
+flex:1;
+padding:12px;
+border:none;
+outline:none;
+background:#111827;
 color:white;
-font-size:10px;
-animation:fall linear infinite;
 }
 
-@keyframes fall{
-to{
-transform:translateY(100vh);
+#send{
+padding:12px 20px;
+background:#2563eb;
+border:none;
+color:white;
+cursor:pointer;
+}
+
+#send:hover{
+background:#1d4ed8;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+#chatbot{
+width:100%;
 }
 }
+
 </style>
 </head>
 
 <body>
 
-<div id="ai-bot-kit-chatbot" data-chatbot-id="ba1c1769-2922-44"></div>
-<script src="https://app.aibotkit.io/embed.js" async defer></script>
+<div id="chatbot">
+
+<div id="chat-header">
+🤖 AI CHAT
+</div>
+
+<div id="messages"></div>
+
+<div id="input-area">
+<input id="input" placeholder="Nhập tin nhắn...">
+<button id="send">Gửi</button>
+</div>
+
+</div>
 
 <script>
 
-/* tự mở chatbot */
-setTimeout(()=>{
-let btn=document.querySelector(".ai-botkit-button")
-if(btn) btn.click()
-},2000)
+const messages = document.getElementById("messages")
+const input = document.getElementById("input")
+const send = document.getElementById("send")
 
-function snow(){
+function addMessage(text, type){
 
-let snow=document.createElement("div")
+const div = document.createElement("div")
+div.className = "message " + type
+div.innerText = text
 
-snow.className="snow"
-snow.innerHTML="❄"
-snow.style.left=Math.random()*window.innerWidth+"px"
-snow.style.animationDuration=(Math.random()*3+2)+"s"
+messages.appendChild(div)
 
-document.body.appendChild(snow)
-
-setTimeout(()=>{
-snow.remove()
-},5000)
+messages.scrollTop = messages.scrollHeight
 
 }
 
-setInterval(snow,120)
+send.onclick = sendMessage
+
+input.addEventListener("keypress", function(e){
+if(e.key==="Enter") sendMessage()
+})
+
+async function sendMessage(){
+
+const text = input.value.trim()
+
+if(!text) return
+
+addMessage(text,"user")
+
+input.value=""
+
+addMessage("Đang trả lời...","bot")
+
+const response = await fetch("https://api.openai.com/v1/chat/completions",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json",
+"Authorization":"Bearer YOUR_API_KEY"
+},
+
+body:JSON.stringify({
+model:"gpt-4o-mini",
+messages:[
+{role:"user",content:text}
+]
+})
+
+})
+
+const data = await response.json()
+
+messages.lastChild.innerText =
+data.choices[0].message.content
+
+}
 
 </script>
 
