@@ -23,7 +23,7 @@ height:100vh;
 z-index:9999;
 }
 
-/* ẩn nút */
+/* ẩn nút mở */
 .ai-botkit-button{
 display:none !important;
 }
@@ -46,25 +46,31 @@ transform:translateY(100vh);
 
 <body>
 
+<!-- BOT -->
 <div id="ai-bot-kit-chatbot" data-chatbot-id="ba1c1769-2922-44"></div>
 
-<script src="https://app.aibotkit.io/embed.js" async defer></script>
+<script src="https://app.aibotkit.io/embed.js"></script>
 
 <script>
 
-/* mở bot tự động */
+/* tự mở bot */
 
-const openBot = setInterval(()=>{
+function openBot(){
+
 let btn=document.querySelector(".ai-botkit-button")
 
 if(btn){
 btn.click()
-clearInterval(openBot)
+}else{
+setTimeout(openBot,300)
 }
 
-},500)
+}
 
-/* tuyết */
+openBot()
+
+
+/* tuyết rơi */
 
 function snow(){
 
