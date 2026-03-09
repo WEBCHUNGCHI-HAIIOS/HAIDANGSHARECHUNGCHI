@@ -54,7 +54,34 @@ align-items:center;
 color:white;
 font-size:40px;
 font-weight:bold;
-text-align:center;
+}
+
+/* chữ phát sáng */
+
+.glow{
+text-shadow:
+0 0 5px white,
+0 0 10px white,
+0 0 20px #00ffff,
+0 0 30px #00ffff,
+0 0 40px #00ffff;
+animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+from{
+text-shadow:
+0 0 5px white,
+0 0 10px white,
+0 0 20px #00ffff;
+}
+to{
+text-shadow:
+0 0 10px white,
+0 0 20px #00ffff,
+0 0 40px #00ffff,
+0 0 60px #00ffff;
+}
 }
 
 /* chatbot nửa màn hình */
@@ -90,43 +117,6 @@ transform:translateY(100vh);
 }
 }
 
-/* NÚT FB TO HƠN */
-
-.fb-btn{
-position:fixed;
-left:20px;
-bottom:20px;
-background:#1877f2;
-color:white;
-padding:16px 28px;
-border-radius:30px;
-font-weight:bold;
-font-size:18px;
-text-decoration:none;
-box-shadow:0 4px 10px rgba(0,0,0,0.3);
-z-index:9999;
-}
-
-/* NÚT BOT TO */
-
-.bot-btn{
-position:fixed;
-right:20px;
-bottom:20px;
-width:70px;
-height:70px;
-background:#25d366;
-border-radius:50%;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:30px;
-color:white;
-box-shadow:0 4px 10px rgba(0,0,0,0.3);
-z-index:9999;
-cursor:pointer;
-}
-
 </style>
 </head>
 
@@ -144,25 +134,22 @@ cursor:pointer;
 <button onclick="vaoWeb()">Vào Trang Chủ</button>
 </div>
 
-<div class="left">
-THONG TIN ADMIN HAIDANG
-ĐƯỢC ADMINVIET CHỨNG MINMH
-ĐỘ UY TÍN VÀ MINH BẠCH
-QUỸ BẢO HIỂM 15.000.000
-NHẬN GDTG-GT-DT-THU SELL All
-DONE 1S
+<div class="left glow">
+    THONG TIN ADMIN HAIDANG
+  ĐƯỢC ADMINVIET CHỨNG MINMH
+     ĐỘ UY TÍN VÀ MINH BẠCH 
+    QUỸ BẢO HIỂM 15.000.000
+  NHẬN GDTG-GT-DT-THU SELL All
+            DONE 1S
 </div>
 
 <!-- BOT -->
 <div id="ai-bot-kit-chatbot" data-chatbot-id="ba1c1769-2922-44"></div>
 
 <!-- NÚT FACEBOOK -->
-<a href="https://www.facebook.com/ADMINGDTGDINHHOANG" target="_blank" class="fb-btn">
+<a href="https://www.facebook.com/ADMINGDTGDINHHOANG" target="_blank" style="position:fixed;left:20px;bottom:20px;background:#1877f2;color:white;padding:12px 18px;border-radius:25px;font-weight:bold;text-decoration:none;box-shadow:0 4px 10px rgba(0,0,0,0.3);z-index:9999;">
 FB: ADMIN
 </a>
-
-<!-- NÚT BOT -->
-<div class="bot-btn" onclick="openBot()">💬</div>
 
 <script src="https://app.aibotkit.io/embed.js"></script>
 
@@ -175,7 +162,7 @@ document.getElementById("intro").style.display="none"
 document.getElementById("nhac").play()
 }
 
-/* mở bot */
+/* tự mở bot */
 
 function openBot(){
 
@@ -188,6 +175,8 @@ setTimeout(openBot,300)
 }
 
 }
+
+openBot()
 
 /* tuyết */
 
@@ -208,7 +197,9 @@ snow.remove()
 
 }
 
-setInterval(snow,120)
+/* TUYẾT DÀY HƠN */
+
+setInterval(snow,40)
 
 </script>
 
