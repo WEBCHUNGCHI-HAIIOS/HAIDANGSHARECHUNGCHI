@@ -23,7 +23,7 @@ height:100vh;
 z-index:9999;
 }
 
-/* ẩn nút tròn */
+/* ẩn nút */
 .ai-botkit-button{
 display:none !important;
 }
@@ -52,7 +52,19 @@ transform:translateY(100vh);
 
 <script>
 
-/* hiệu ứng tuyết */
+/* mở bot tự động */
+
+const openBot = setInterval(()=>{
+let btn=document.querySelector(".ai-botkit-button")
+
+if(btn){
+btn.click()
+clearInterval(openBot)
+}
+
+},500)
+
+/* tuyết */
 
 function snow(){
 
