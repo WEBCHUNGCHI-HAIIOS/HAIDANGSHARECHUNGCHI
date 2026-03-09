@@ -5,15 +5,30 @@
 <title>AI Bạn Đồng Hành</title>
 
 <style>
+
 body{
 margin:0;
 font-family:Arial;
 background:linear-gradient(135deg,#1e3c72,#2a5298);
 height:100vh;
 overflow:hidden;
+display:flex;
+}
+
+/* khu vực web bên trái */
+
+.left{
+flex:1;
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
+font-size:40px;
+font-weight:bold;
 }
 
 /* chatbot nửa màn hình */
+
 #ai-bot-kit-chatbot{
 position:fixed;
 right:0;
@@ -23,10 +38,13 @@ height:100vh;
 z-index:9999;
 }
 
-/* ẩn nút mở */
+/* ẩn nút */
+
 .ai-botkit-button{
 display:none !important;
 }
+
+/* tuyết */
 
 .snow{
 position:fixed;
@@ -41,10 +59,15 @@ to{
 transform:translateY(100vh);
 }
 }
+
 </style>
 </head>
 
 <body>
+
+<div class="left">
+AI WEBSITE
+</div>
 
 <!-- BOT -->
 <div id="ai-bot-kit-chatbot" data-chatbot-id="ba1c1769-2922-44"></div>
@@ -69,8 +92,7 @@ setTimeout(openBot,300)
 
 openBot()
 
-
-/* tuyết rơi */
+/* tuyết */
 
 function snow(){
 
