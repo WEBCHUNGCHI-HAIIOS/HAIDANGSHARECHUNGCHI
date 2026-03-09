@@ -120,7 +120,7 @@ Xin chào 👋 Tôi là AI. Bạn muốn hỏi gì?
 
 <script>
 
-const API_KEY = "DAN_API_KEY_CUA_BAN_VAO_DAY";
+const API_KEY = "DAN_API_KEY_CUA_BAN";
 
 let input=document.getElementById("input")
 
@@ -134,7 +134,12 @@ let text=input.value.trim()
 if(text=="") return
 
 add("user",text)
+
 input.value=""
+
+let loading=add("bot","AI đang trả lời...")
+
+try{
 
 let res = await fetch("https://api.openai.com/v1/chat/completions",{
 method:"POST",
@@ -154,9 +159,19 @@ let data = await res.json()
 
 let reply=data.choices[0].message.content
 
+loading.remove()
+
 add("bot",reply)
 
 speak(reply)
+
+}catch(err){
+
+loading.remove()
+
+add("bot","⚠️ AI đang lỗi hoặc thiếu API key.")
+
+}
 
 }
 
@@ -173,6 +188,8 @@ div.innerText=text
 box.appendChild(div)
 
 box.scrollTop=box.scrollHeight
+
+return div
 
 }
 
