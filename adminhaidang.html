@@ -15,7 +15,7 @@ overflow:hidden;
 display:flex;
 }
 
-/* canvas nền sao */
+/* nền vũ trụ */
 
 #space{
 position:fixed;
@@ -55,7 +55,7 @@ color:white;
 cursor:pointer;
 }
 
-/* chữ bên trái */
+/* chữ */
 
 .left{
 flex:1;
@@ -109,7 +109,7 @@ animation:shine 3s infinite;
 }
 
 @keyframes shine{
-100%{ left:150%; }
+100%{left:150%;}
 }
 
 /* đồng hồ */
@@ -158,6 +158,29 @@ transform:translateY(100vh);
 }
 }
 
+/* sao băng */
+
+.shooting-star{
+position:fixed;
+width:3px;
+height:80px;
+background:linear-gradient(-45deg,white,rgba(255,255,255,0));
+transform:rotate(45deg);
+animation:shoot 1s linear forwards;
+z-index:1;
+}
+
+@keyframes shoot{
+0%{
+transform:translate(0,0) rotate(45deg);
+opacity:1;
+}
+100%{
+transform:translate(600px,600px) rotate(45deg);
+opacity:0;
+}
+}
+
 </style>
 </head>
 
@@ -197,7 +220,7 @@ FB: ADMIN
 
 <script>
 
-/* mở web */
+/* vào web */
 
 function vaoWeb(){
 document.getElementById("intro").style.display="none"
@@ -244,7 +267,7 @@ h+":"+m+":"+s+" | "+d+"/"+mo+"/"+y
 setInterval(updateClock,1000)
 updateClock()
 
-/* nền sao vũ trụ */
+/* nền sao */
 
 const canvas=document.getElementById("space")
 const ctx=canvas.getContext("2d")
@@ -288,6 +311,27 @@ requestAnimationFrame(drawStars)
 }
 
 drawStars()
+
+/* sao băng */
+
+function shootingStar(){
+
+let star=document.createElement("div")
+
+star.className="shooting-star"
+
+star.style.top=Math.random()*window.innerHeight+"px"
+star.style.left=Math.random()*window.innerWidth+"px"
+
+document.body.appendChild(star)
+
+setTimeout(()=>{
+star.remove()
+},1000)
+
+}
+
+setInterval(shootingStar,4000)
 
 </script>
 
