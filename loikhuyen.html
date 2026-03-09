@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -6,7 +5,6 @@
 <title>AI Bạn Đồng Hành</title>
 
 <style>
-
 body{
 margin:0;
 font-family:Arial;
@@ -19,7 +17,6 @@ overflow:hidden;
 }
 
 .chatbox{
-
 width:420px;
 height:550px;
 background:white;
@@ -28,7 +25,6 @@ display:flex;
 flex-direction:column;
 overflow:hidden;
 box-shadow:0 0 30px rgba(0,0,0,0.4);
-
 }
 
 .header{
@@ -98,7 +94,6 @@ to{
 transform:translateY(100vh);
 }
 }
-
 </style>
 </head>
 
@@ -111,11 +106,9 @@ transform:translateY(100vh);
 </div>
 
 <div class="messages" id="messages">
-
 <div class="msg bot">
-Xin chào 👋 Tôi là AI động lực. Bạn muốn tâm sự gì?
+Xin chào 👋 Tôi là AI. Bạn muốn hỏi gì?
 </div>
-
 </div>
 
 <div class="inputbox">
@@ -127,28 +120,43 @@ Xin chào 👋 Tôi là AI động lực. Bạn muốn tâm sự gì?
 
 <script>
 
+const API_KEY = "DAN_API_KEY_CUA_BAN_VAO_DAY";
+
 let input=document.getElementById("input")
 
 input.addEventListener("keypress",function(e){
 if(e.key==="Enter") send()
 })
 
-function send(){
+async function send(){
 
 let text=input.value.trim()
-
 if(text=="") return
 
 add("user",text)
-
-let reply=bot(text)
-
-setTimeout(()=>{
-add("bot",reply)
-speak(reply)
-},500)
-
 input.value=""
+
+let res = await fetch("https://api.openai.com/v1/chat/completions",{
+method:"POST",
+headers:{
+"Content-Type":"application/json",
+"Authorization":"Bearer "+API_KEY
+},
+body:JSON.stringify({
+model:"gpt-4o-mini",
+messages:[
+{role:"user",content:text}
+]
+})
+})
+
+let data = await res.json()
+
+let reply=data.choices[0].message.content
+
+add("bot",reply)
+
+speak(reply)
 
 }
 
@@ -168,38 +176,10 @@ box.scrollTop=box.scrollHeight
 
 }
 
-function bot(text){
-
-text=text.toLowerCase()
-
-if(text.includes("buồn"))
-return "Mình hiểu cảm giác đó. Nhưng khó khăn chỉ là tạm thời. Bạn mạnh mẽ hơn bạn nghĩ."
-
-if(text.includes("mệt"))
-return "Hãy nghỉ một chút rồi tiếp tục cố gắng nhé. Bạn đang làm rất tốt."
-
-if(text.includes("học"))
-return "Học hôm nay là để tương lai của bạn tốt hơn."
-
-if(text.includes("nghèo"))
-return "Nhiều người thành công từng rất nghèo. Điều quan trọng là bạn không bỏ cuộc."
-
-if(text.includes("bỏ cuộc"))
-return "Đừng bỏ cuộc. Người kiên trì luôn chiến thắng."
-
-if(text.includes("chào"))
-return "Chào bạn 👋 Hôm nay bạn cảm thấy thế nào?"
-
-return "Hãy tiếp tục cố gắng. Tương lai của bạn rất quan trọng."
-
-}
-
 function speak(text){
 
 let speech=new SpeechSynthesisUtterance(text)
-
 speech.lang="vi-VN"
-
 speechSynthesis.speak(speech)
 
 }
@@ -209,11 +189,8 @@ function snow(){
 let snow=document.createElement("div")
 
 snow.className="snow"
-
 snow.innerHTML="❄"
-
 snow.style.left=Math.random()*window.innerWidth+"px"
-
 snow.style.animationDuration=(Math.random()*3+2)+"s"
 
 document.body.appendChild(snow)
@@ -230,4 +207,3 @@ setInterval(snow,120)
 
 </body>
 </html>
-```
