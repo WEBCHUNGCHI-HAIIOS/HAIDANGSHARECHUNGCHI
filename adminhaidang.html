@@ -9,69 +9,13 @@
 body{
 margin:0;
 font-family:Arial;
-background:black;
+background:linear-gradient(135deg,#1e3c72,#2a5298);
 height:100vh;
 overflow:hidden;
 display:flex;
 }
 
-/* nền sao */
-
-#space{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-z-index:0;
-}
-
-/* matrix */
-
-#matrix{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-z-index:1;
-opacity:0.35;
-}
-
-/* logo 3D */
-
-#logo3d{
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-font-size:80px;
-font-weight:bold;
-color:#00ffff;
-text-shadow:
-0 0 10px #00ffff,
-0 0 20px #00ffff,
-0 0 40px #00ffff,
-0 0 80px #00ffff;
-animation:spin3d 8s linear infinite;
-z-index:1;
-opacity:0.25;
-pointer-events:none;
-}
-
-@keyframes spin3d{
-
-0%{
-transform:translate(-50%,-50%) rotateY(0deg);
-}
-
-100%{
-transform:translate(-50%,-50%) rotateY(360deg);
-}
-
-}
-
-/* intro */
+/* màn hình giới thiệu */
 
 #intro{
 position:fixed;
@@ -100,7 +44,7 @@ color:white;
 cursor:pointer;
 }
 
-/* chữ */
+/* khu vực web bên trái */
 
 .left{
 flex:1;
@@ -110,68 +54,9 @@ align-items:center;
 color:white;
 font-size:40px;
 font-weight:bold;
-text-align:center;
-z-index:2;
 }
 
-/* phát sáng */
-
-.glow{
-text-shadow:
-0 0 5px white,
-0 0 10px white,
-0 0 20px #00ffff,
-0 0 30px #00ffff,
-0 0 40px #00ffff;
-animation:glow 2s infinite alternate;
-}
-
-@keyframes glow{
-from{
-text-shadow:0 0 5px white,0 0 10px white,0 0 20px #00ffff;
-}
-to{
-text-shadow:0 0 10px white,0 0 20px #00ffff,0 0 40px #00ffff,0 0 60px #00ffff;
-}
-}
-
-/* ánh sáng chạy */
-
-.shine{
-position:relative;
-overflow:hidden;
-}
-
-.shine::after{
-content:"";
-position:absolute;
-top:0;
-left:-100%;
-width:50%;
-height:100%;
-background:linear-gradient(120deg,transparent,rgba(255,255,255,0.8),transparent);
-animation:shine 3s infinite;
-}
-
-@keyframes shine{
-100%{left:150%;}
-}
-
-/* đồng hồ */
-
-#clock{
-position:fixed;
-top:20px;
-left:50%;
-transform:translateX(-50%);
-color:white;
-font-size:18px;
-font-weight:bold;
-z-index:9999;
-text-shadow:0 0 10px #00ffff;
-}
-
-/* chatbot */
+/* chatbot nửa màn hình */
 
 #ai-bot-kit-chatbot{
 position:fixed;
@@ -182,8 +67,11 @@ height:100vh;
 z-index:9999;
 }
 
+/* ẩn nút */
+
 .ai-botkit-button{
 display:none !important;
+transform:scale(1.8);
 }
 
 /* tuyết */
@@ -194,7 +82,6 @@ top:-10px;
 color:white;
 font-size:10px;
 animation:fall linear infinite;
-z-index:3;
 }
 
 @keyframes fall{
@@ -203,183 +90,87 @@ transform:translateY(100vh);
 }
 }
 
-/* sao băng */
-
-.shooting-star{
-position:fixed;
-width:3px;
-height:80px;
-background:linear-gradient(-45deg,white,rgba(255,255,255,0));
-transform:rotate(45deg);
-animation:shoot 1s linear forwards;
-z-index:1;
-}
-
-@keyframes shoot{
-0%{
-transform:translate(0,0) rotate(45deg);
-opacity:1;
-}
-100%{
-transform:translate(600px,600px) rotate(45deg);
-opacity:0;
-}
-}
-
 </style>
 </head>
 
 <body>
 
-<canvas id="space"></canvas>
-<canvas id="matrix"></canvas>
-
-<div id="logo3d">ADMIN HAIDANG</div>
-
+<!-- NHẠC -->
 <audio id="nhac" loop>
 <source src="nhac.mp3" type="audio/mpeg">
 </audio>
 
+<!-- MÀN HÌNH GIỚI THIỆU -->
 <div id="intro">
-<h1>Chào mừng đến với TRANG CHỦ ADMIN HAIDANG</h1>
+<h1>Chào mừng đến với TRANG CHU ADMIN HAIDANG</h1>
 <p>Web được tạo bởi ADMINHAIDANG</p>
 <button onclick="vaoWeb()">Vào Trang Chủ</button>
 </div>
 
-<div class="left glow shine">
-THONG TIN ADMIN HAIDANG <br>
-ĐƯỢC ADMINVIET CHỨNG MINH <br>
-ĐỘ UY TÍN VÀ MINH BẠCH <br>
-QUỸ BẢO HIỂM 15.000.000 <br>
-NHẬN GDTG-GT-DT-THU SELL ALL <br>
-DONE 1S
+<div class="left">
+    THONG TIN ADMIN HAIDANG
+  ĐƯỢC ADMINVIET CHỨNG MINMH
+     ĐỘ UY TÍN VÀ MINH BẠCH 
+    QUỸ BẢO HIỂM 15.000.000
+  NHẬN GDTG-GT-DT-THU SELL All
+            DONE 1S
 </div>
 
+<!-- BOT -->
 <div id="ai-bot-kit-chatbot" data-chatbot-id="ba1c1769-2922-44"></div>
 
-<a href="https://www.facebook.com/ADMINGDTGDINHHOANG" target="_blank"
-style="position:fixed;left:20px;bottom:20px;background:#1877f2;color:white;padding:12px 18px;border-radius:25px;font-weight:bold;text-decoration:none;box-shadow:0 4px 10px rgba(0,0,0,0.3);z-index:9999;">
+<!-- NÚT FACEBOOK -->
+<a href="https://www.facebook.com/ADMINGDTGDINHHOANG" target="_blank" style="position:fixed;left:20px;bottom:20px;background:#1877f2;color:white;padding:18px 30px;border-radius:40px;font-weight:bold;font-size:20px;text-decoration:none;box-shadow:0 4px 10px rgba(0,0,0,0.3);z-index:9999;">
 FB: ADMIN
 </a>
-
-<div id="clock"></div>
 
 <script src="https://app.aibotkit.io/embed.js"></script>
 
 <script>
 
-/* vào web */
+/* vào web + phát nhạc */
 
 function vaoWeb(){
 document.getElementById("intro").style.display="none"
 document.getElementById("nhac").play()
 }
 
-/* mở bot */
+/* tự mở bot */
 
 function openBot(){
+
 let btn=document.querySelector(".ai-botkit-button")
-if(btn){btn.click()}
-else{setTimeout(openBot,300)}
+
+if(btn){
+btn.click()
+}else{
+setTimeout(openBot,300)
 }
+
+}
+
 openBot()
 
 /* tuyết */
 
 function snow(){
+
 let snow=document.createElement("div")
+
 snow.className="snow"
 snow.innerHTML="❄"
 snow.style.left=Math.random()*window.innerWidth+"px"
 snow.style.animationDuration=(Math.random()*3+2)+"s"
+
 document.body.appendChild(snow)
-setTimeout(()=>{snow.remove()},5000)
-}
-
-setInterval(snow,40)
-
-/* đồng hồ */
-
-function updateClock(){
-let now=new Date()
-let h=String(now.getHours()).padStart(2,"0")
-let m=String(now.getMinutes()).padStart(2,"0")
-let s=String(now.getSeconds()).padStart(2,"0")
-let d=now.getDate()
-let mo=now.getMonth()+1
-let y=now.getFullYear()
-
-document.getElementById("clock").innerHTML=
-h+":"+m+":"+s+" | "+d+"/"+mo+"/"+y
-}
-
-setInterval(updateClock,1000)
-updateClock()
-
-/* sao băng */
-
-function shootingStar(){
-
-let star=document.createElement("div")
-
-star.className="shooting-star"
-
-star.style.top=Math.random()*window.innerHeight+"px"
-star.style.left=Math.random()*window.innerWidth+"px"
-
-document.body.appendChild(star)
 
 setTimeout(()=>{
-star.remove()
-},1000)
+snow.remove()
+},5000)
 
 }
 
-setInterval(shootingStar,4000)
-
-/* matrix */
-
-const matrix=document.getElementById("matrix")
-const mtx=matrix.getContext("2d")
-
-matrix.width=window.innerWidth
-matrix.height=window.innerHeight
-
-let letters="01ADMINHAIDANG"
-letters=letters.split("")
-
-let fontSize=14
-let columns=matrix.width/fontSize
-
-let drops=[]
-
-for(let x=0;x<columns;x++)
-drops[x]=1
-
-function drawMatrix(){
-
-mtx.fillStyle="rgba(0,0,0,0.05)"
-mtx.fillRect(0,0,matrix.width,matrix.height)
-
-mtx.fillStyle="#0F0"
-mtx.font=fontSize+"px monospace"
-
-for(let i=0;i<drops.length;i++){
-
-let text=letters[Math.floor(Math.random()*letters.length)]
-
-mtx.fillText(text,i*fontSize,drops[i]*fontSize)
-
-if(drops[i]*fontSize>matrix.height && Math.random()>0.975)
-drops[i]=0
-
-drops[i]++
-
-}
-
-}
-
-setInterval(drawMatrix,33)
+setInterval(snow,120)
 
 </script>
 
