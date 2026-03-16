@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>ADMIN HAIDANG</title>
@@ -8,12 +8,28 @@
 
 body{
 margin:0;
-padding:0;
 background:black;
+color:white;
 font-family:Arial;
 text-align:center;
-color:white;
 overflow:hidden;
+}
+
+h1{
+margin-top:60px;
+font-size:60px;
+color:#00ffff;
+text-shadow:0 0 20px #00ffff,0 0 40px #00ffff;
+}
+
+.video{
+margin-top:40px;
+}
+
+video{
+width:700px;
+border-radius:20px;
+box-shadow:0 0 40px #ff00ff;
 }
 
 canvas{
@@ -23,37 +39,20 @@ left:0;
 z-index:-1;
 }
 
-h1{
-margin-top:60px;
-font-size:60px;
-color:#00ffff;
-text-shadow:0 0 20px #00ffff,0 0 40px #00ffff,0 0 60px #00ffff;
-}
-
-.video-box{
-margin-top:40px;
-display:flex;
-justify-content:center;
-}
-
-video{
-width:700px;
-border-radius:20px;
-box-shadow:0 0 40px #ff00ff;
-}
-
 </style>
+
 </head>
 
 <body>
 
 <h1>ADMIN HAIDANG</h1>
 
-<div class="video-box">
-<video controls autoplay loop>
-<source src="video.mp4" type="video/mp4">
-Trình duyệt không hỗ trợ video.
+<div class="video">
+
+<video controls autoplay loop muted>
+<source src="./video.mp4" type="video/mp4">
 </video>
+
 </div>
 
 <canvas id="stars"></canvas>
@@ -77,7 +76,6 @@ size:Math.random()*2
 }
 
 function draw(){
-
 ctx.clearRect(0,0,canvas.width,canvas.height);
 
 ctx.fillStyle="white";
