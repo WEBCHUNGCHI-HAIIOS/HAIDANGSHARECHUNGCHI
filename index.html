@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
@@ -7,117 +6,58 @@
 <title>ADMIN HAIDANG</title>
 
 <style>
-
 body{
 margin:0;
 padding:0;
-background:black;
-font-family:Arial;
 overflow:hidden;
+background:black;
 }
 
-/* màn hình thông báo */
-#intro{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.85);
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-text-align:center;
-color:white;
-z-index:10;
-}
-
-/* chữ */
-#intro h2{
-font-size:30px;
-margin-bottom:40px;
-text-shadow:0 0 10px #00ffff,0 0 20px #00ffff;
-}
-
-/* nút truy cập */
-#enter{
-padding:15px 45px;
-font-size:22px;
-background:#00ff88;
-border:none;
-border-radius:12px;
-cursor:pointer;
-box-shadow:0 0 20px #00ff88;
-}
-
-/* hiệu ứng nút */
-#enter:hover{
-transform:scale(1.1);
-}
-
-/* video nền */
 video{
 position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
+right:0;
+bottom:0;
+min-width:100%;
+min-height:100%;
 object-fit:cover;
-z-index:-1;
 }
 
-/* chữ ADMIN */
-h1{
-position:absolute;
-top:40px;
+.overlay{
+position:fixed;
+top:20px;
 width:100%;
 text-align:center;
-font-size:50px;
-color:#00ffff;
-text-shadow:0 0 20px #00ffff,0 0 40px #00ffff;
+color:white;
+font-size:30px;
+font-weight:bold;
+text-shadow:0 0 20px red;
 }
-
 </style>
-
 </head>
 
 <body>
 
-<div id="intro">
-
-<h2>
-ADMIN HAIDANG<br>
-NHẬN GDTG - ĐỔI TIỀN 24/7<br>
-THU SLL ALL GAME<br>
-CÂN ALL DỊCH VỤ
-</h2>
-
-<button id="enter">TRUY CẬP</button>
-
+<div class="overlay">
+ADMIN HAIDANG NHẬN GDTG ĐỔI TIỀN 24/7
 </div>
 
-<h1>ADMIN HAIDANG</h1>
-
-<video id="video" loop>
-<source src="nhac.mp4" type="video/mp4">
+<video autoplay loop playsinline controls="false">
+<source src="video.mp4" type="video/mp4">
 </video>
 
-<script>
-
-let btn=document.getElementById("enter");
-let intro=document.getElementById("intro");
-let video=document.getElementById("video");
-
-btn.onclick=function(){
-
-intro.style.display="none";
-
-video.play();
-
-}
-
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/69b774e60160da1c37f26180/1jjqa19qs';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
 </script>
+<!--End of Tawk.to Script-->
 
 </body>
 </html>
