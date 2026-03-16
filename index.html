@@ -8,22 +8,12 @@
 
 body{
 margin:0;
+padding:0;
 background:black;
+overflow:hidden;
+font-family:Arial;
 color:white;
 text-align:center;
-font-family:Arial;
-overflow:hidden;
-}
-
-#logo{
-font-size:60px;
-margin-top:40px;
-text-shadow:0 0 10px cyan,0 0 20px cyan,0 0 40px magenta;
-}
-
-audio{
-margin-top:40px;
-width:500px;
 }
 
 canvas{
@@ -33,26 +23,47 @@ left:0;
 z-index:-1;
 }
 
+h1{
+margin-top:60px;
+font-size:60px;
+color:#00ffff;
+text-shadow:0 0 20px #00ffff,0 0 40px #00ffff,0 0 60px #00ffff;
+}
+
+.video-box{
+margin-top:40px;
+display:flex;
+justify-content:center;
+}
+
+video{
+width:700px;
+border-radius:20px;
+box-shadow:0 0 40px #ff00ff;
+}
+
 </style>
 </head>
 
 <body>
 
-<h1 id="logo">ADMIN HAIDANG</h1>
+<h1>ADMIN HAIDANG</h1>
 
-<audio controls autoplay loop>
-<source src="video.mp3" type="audio/mpeg">
-</audio>
+<div class="video-box">
+<video controls autoplay loop>
+<source src="video.mp4" type="video/mp4">
+</video>
+</div>
 
 <canvas id="stars"></canvas>
 
 <script>
 
-const canvas=document.getElementById("stars");
-const ctx=canvas.getContext("2d");
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
 
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
 let stars=[];
 
@@ -65,6 +76,7 @@ size:Math.random()*2
 }
 
 function draw(){
+
 ctx.clearRect(0,0,canvas.width,canvas.height);
 
 ctx.fillStyle="white";
@@ -73,13 +85,6 @@ stars.forEach(s=>{
 ctx.beginPath();
 ctx.arc(s.x,s.y,s.size,0,Math.PI*2);
 ctx.fill();
-
-s.y+=0.3;
-
-if(s.y>canvas.height){
-s.y=0;
-}
-
 });
 
 requestAnimationFrame(draw);
