@@ -3,117 +3,133 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>3D Space</title>
+<title>3D Neon Space</title>
 
 <style>
+
 body{
 margin:0;
 overflow:hidden;
-background:black;
 font-family:Arial;
+background:radial-gradient(circle,#000000,#05001a,#000000);
 }
 
-#title{
+canvas{
+position:fixed;
+top:0;
+left:0;
+}
+
+#logo{
+
 position:absolute;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-font-size:60px;
+font-size:70px;
+font-weight:bold;
 color:white;
-text-shadow:0 0 20px cyan,0 0 40px blue;
-animation:spin 6s linear infinite;
+text-align:center;
+
+text-shadow:
+0 0 10px #00ffff,
+0 0 20px #00ffff,
+0 0 40px #ff00ff,
+0 0 80px #ff00ff;
+
+animation:spin 8s linear infinite,
+glow 2s ease-in-out infinite alternate;
+
 }
 
 @keyframes spin{
-0%{transform:translate(-50%,-50%) rotateY(0deg);}
-100%{transform:translate(-50%,-50%) rotateY(360deg);}
+
+0%{
+transform:translate(-50%,-50%) rotateY(0deg);
 }
 
-button{
-position:absolute;
-bottom:40px;
-left:50%;
-transform:translateX(-50%);
-padding:15px 40px;
-font-size:20px;
-border:none;
-border-radius:10px;
-background:cyan;
-cursor:pointer;
+100%{
+transform:translate(-50%,-50%) rotateY(360deg);
 }
+
+}
+
+@keyframes glow{
+
+from{
+text-shadow:
+0 0 10px cyan,
+0 0 20px cyan,
+0 0 40px magenta;
+}
+
+to{
+text-shadow:
+0 0 20px yellow,
+0 0 40px red,
+0 0 80px magenta;
+}
+
+}
+
 </style>
-
 </head>
 
 <body>
 
-<div id="title">ADMIN HAIDANG</div>
+<div id="logo">ADMIN HAIDANG</div>
 
-<button onclick="start()">KHỞI ĐỘNG</button>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<canvas id="stars"></canvas>
 
 <script>
 
-let scene,camera,renderer,stars;
+const canvas=document.getElementById("stars");
+const ctx=canvas.getContext("2d");
 
-function start(){
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
-document.querySelector("button").style.display="none";
+let stars=[];
 
-scene = new THREE.Scene();
+for(let i=0;i<300;i++){
 
-camera = new THREE.PerspectiveCamera(
-75,
-window.innerWidth/window.innerHeight,
-0.1,
-1000
-);
+stars.push({
 
-renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth,window.innerHeight);
-document.body.appendChild(renderer.domElement);
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*3,
+speed:Math.random()*1
 
-let geometry = new THREE.BufferGeometry();
-let vertices = [];
-
-for(let i=0;i<10000;i++){
-
-vertices.push(
-THREE.MathUtils.randFloatSpread(2000),
-THREE.MathUtils.randFloatSpread(2000),
-THREE.MathUtils.randFloatSpread(2000)
-);
+});
 
 }
 
-geometry.setAttribute(
-'position',
-new THREE.Float32BufferAttribute(vertices,3)
-);
+function draw(){
 
-let material = new THREE.PointsMaterial({color:0xffffff});
+ctx.fillStyle="rgba(0,0,20,0.4)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
 
-stars = new THREE.Points(geometry,material);
+ctx.fillStyle="white";
 
-scene.add(stars);
+stars.forEach(s=>{
 
-camera.position.z = 5;
+ctx.beginPath();
+ctx.arc(s.x,s.y,s.size,0,Math.PI*2);
+ctx.fill();
 
-animate();
+s.y+=s.speed;
+
+if(s.y>canvas.height){
+s.y=0;
+}
+
+});
+
+requestAnimationFrame(draw);
 
 }
 
-function animate(){
-
-requestAnimationFrame(animate);
-
-stars.rotation.x += 0.0005;
-stars.rotation.y += 0.0005;
-
-renderer.render(scene,camera);
-
-}
+draw();
 
 </script>
 
