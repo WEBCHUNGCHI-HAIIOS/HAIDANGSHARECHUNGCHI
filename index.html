@@ -14,7 +14,6 @@ background:black;
 font-family:Arial;
 }
 
-/* video nền */
 video{
 position:fixed;
 top:0;
@@ -26,7 +25,6 @@ background:black;
 z-index:-1;
 }
 
-/* chữ */
 h1{
 position:absolute;
 top:60px;
@@ -44,9 +42,15 @@ text-shadow:0 0 20px #00ffff,0 0 40px #00ffff;
 
 <h1>ADMIN HAIDANG</h1>
 
-<video autoplay muted loop playsinline>
+<video autoplay loop id="video">
 <source src="nhac.mp4" type="video/mp4">
 </video>
+
+<script>
+window.onload = function(){
+document.getElementById("video").play();
+}
+</script>
 
 </body>
 </html>
