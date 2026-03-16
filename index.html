@@ -42,14 +42,17 @@ text-shadow:0 0 20px #00ffff,0 0 40px #00ffff;
 
 <h1>ADMIN HAIDANG</h1>
 
-<video autoplay loop id="video">
+<video autoplay muted loop id="video">
 <source src="nhac.mp4" type="video/mp4">
 </video>
 
 <script>
-window.onload = function(){
-document.getElementById("video").play();
-}
+let v = document.getElementById("video");
+
+setTimeout(() => {
+v.muted = false;
+v.play();
+},1000);
 </script>
 
 </body>
