@@ -2,15 +2,15 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>3D Neon Space</title>
+<title>ADMIN HAIDANG</title>
 
 <style>
 
 body{
 margin:0;
 overflow:hidden;
-font-family:Arial;
 background:radial-gradient(circle,#000000,#05001a,#000000);
+font-family:Arial;
 }
 
 canvas{
@@ -20,25 +20,23 @@ left:0;
 }
 
 #logo{
-
 position:absolute;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-font-size:70px;
+font-size:80px;
 font-weight:bold;
 color:white;
 text-align:center;
 
 text-shadow:
-0 0 10px #00ffff,
-0 0 20px #00ffff,
-0 0 40px #ff00ff,
-0 0 80px #ff00ff;
+0 0 10px cyan,
+0 0 20px cyan,
+0 0 40px magenta,
+0 0 80px magenta;
 
 animation:spin 8s linear infinite,
 glow 2s ease-in-out infinite alternate;
-
 }
 
 @keyframes spin{
@@ -78,11 +76,11 @@ text-shadow:
 
 <div id="logo">ADMIN HAIDANG</div>
 
-<canvas id="stars"></canvas>
+<canvas id="space"></canvas>
 
 <script>
 
-const canvas=document.getElementById("stars");
+const canvas=document.getElementById("space");
 const ctx=canvas.getContext("2d");
 
 canvas.width=window.innerWidth;
@@ -90,14 +88,14 @@ canvas.height=window.innerHeight;
 
 let stars=[];
 
-for(let i=0;i<300;i++){
+for(let i=0;i<400;i++){
 
 stars.push({
 
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 size:Math.random()*3,
-speed:Math.random()*1
+speed:Math.random()*1.5
 
 });
 
@@ -105,7 +103,7 @@ speed:Math.random()*1
 
 function draw(){
 
-ctx.fillStyle="rgba(0,0,20,0.4)";
+ctx.fillStyle="rgba(0,0,20,0.5)";
 ctx.fillRect(0,0,canvas.width,canvas.height);
 
 ctx.fillStyle="white";
