@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
@@ -78,6 +77,28 @@ color:#00ffff;
 text-shadow:0 0 20px #00ffff,0 0 40px #00ffff;
 }
 
+/* nút facebook */
+.fb-btn{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#1877f2;
+color:white;
+padding:12px 20px;
+border-radius:30px;
+font-size:16px;
+font-weight:bold;
+text-decoration:none;
+box-shadow:0 0 15px rgba(0,0,0,0.6);
+transition:0.3s;
+z-index:5;
+}
+
+.fb-btn:hover{
+transform:scale(1.1);
+background:#0d5ed7;
+}
+
 </style>
 
 </head>
@@ -87,10 +108,10 @@ text-shadow:0 0 20px #00ffff,0 0 40px #00ffff;
 <div id="intro">
 
 <h2>
-   ADMIN HAIDANG<br>
+ADMIN HAIDANG<br>
 NHẬN GDTG - ĐỔI TIỀN 24/7<br>
-  THU SLL ALL GAME<br>
-   CÂN ALL DỊCH VỤ
+THU SLL ALL GAME<br>
+CÂN ALL DỊCH VỤ
 </h2>
 
 <button id="enter">TRUY CẬP</button>
@@ -102,6 +123,11 @@ NHẬN GDTG - ĐỔI TIỀN 24/7<br>
 <video id="video" loop>
 <source src="nhac.mp4" type="video/mp4">
 </video>
+
+<!-- nút facebook -->
+<a class="fb-btn" href="https://www.facebook.com/ADMINGDTGDINHHOANG" target="_blank">
+CHECK FB ADMIN
+</a>
 
 <script>
 
