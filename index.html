@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
 <title>ADMIN HAIDANG</title>
@@ -9,9 +9,9 @@
 body{
 margin:0;
 background:black;
-color:white;
 font-family:Arial;
 text-align:center;
+color:white;
 overflow:hidden;
 }
 
@@ -19,11 +19,13 @@ h1{
 margin-top:60px;
 font-size:60px;
 color:#00ffff;
-text-shadow:0 0 20px #00ffff,0 0 40px #00ffff;
+text-shadow:0 0 20px #00ffff,0 0 40px #00ffff,0 0 80px #00ffff;
 }
 
-.video{
+.video-box{
 margin-top:40px;
+display:flex;
+justify-content:center;
 }
 
 video{
@@ -47,10 +49,10 @@ z-index:-1;
 
 <h1>ADMIN HAIDANG</h1>
 
-<div class="video">
+<div class="video-box">
 
 <video controls autoplay loop muted>
-<source src="./video.mp4" type="video/mp4">
+<source src="video.mp4" type="video/mp4">
 </video>
 
 </div>
@@ -76,6 +78,7 @@ size:Math.random()*2
 }
 
 function draw(){
+
 ctx.clearRect(0,0,canvas.width,canvas.height);
 
 ctx.fillStyle="white";
