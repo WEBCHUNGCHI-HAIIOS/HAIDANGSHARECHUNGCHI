@@ -1,0 +1,122 @@
+```html
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>3D Space</title>
+
+<style>
+body{
+margin:0;
+overflow:hidden;
+background:black;
+font-family:Arial;
+}
+
+#title{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:60px;
+color:white;
+text-shadow:0 0 20px cyan,0 0 40px blue;
+animation:spin 6s linear infinite;
+}
+
+@keyframes spin{
+0%{transform:translate(-50%,-50%) rotateY(0deg);}
+100%{transform:translate(-50%,-50%) rotateY(360deg);}
+}
+
+button{
+position:absolute;
+bottom:40px;
+left:50%;
+transform:translateX(-50%);
+padding:15px 40px;
+font-size:20px;
+border:none;
+border-radius:10px;
+background:cyan;
+cursor:pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="title">ADMIN HAIDANG</div>
+
+<button onclick="start()">KHỞI ĐỘNG</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+
+let scene,camera,renderer,stars;
+
+function start(){
+
+document.querySelector("button").style.display="none";
+
+scene = new THREE.Scene();
+
+camera = new THREE.PerspectiveCamera(
+75,
+window.innerWidth/window.innerHeight,
+0.1,
+1000
+);
+
+renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth,window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+let geometry = new THREE.BufferGeometry();
+let vertices = [];
+
+for(let i=0;i<10000;i++){
+
+vertices.push(
+THREE.MathUtils.randFloatSpread(2000),
+THREE.MathUtils.randFloatSpread(2000),
+THREE.MathUtils.randFloatSpread(2000)
+);
+
+}
+
+geometry.setAttribute(
+'position',
+new THREE.Float32BufferAttribute(vertices,3)
+);
+
+let material = new THREE.PointsMaterial({color:0xffffff});
+
+stars = new THREE.Points(geometry,material);
+
+scene.add(stars);
+
+camera.position.z = 5;
+
+animate();
+
+}
+
+function animate(){
+
+requestAnimationFrame(animate);
+
+stars.rotation.x += 0.0005;
+stars.rotation.y += 0.0005;
+
+renderer.render(scene,camera);
+
+}
+
+</script>
+
+</body>
+</html>
+```
