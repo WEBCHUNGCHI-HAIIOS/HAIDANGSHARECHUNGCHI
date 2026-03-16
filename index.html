@@ -1,1 +1,136 @@
-<!DOCTYPE html> <html lang="vi"> <head> <meta charset="UTF-8"> <title>3D Neon Space</title> <style> body{ margin:0; overflow:hidden; font-family:Arial; background:radial-gradient(circle,#000000,#05001a,#000000); } canvas{ position:fixed; top:0; left:0; } #logo{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:70px; font-weight:bold; color:white; text-align:center; text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #ff00ff, 0 0 80px #ff00ff; animation:spin 8s linear infinite, glow 2s ease-in-out infinite alternate; } @keyframes spin{ 0%{ transform:translate(-50%,-50%) rotateY(0deg); } 100%{ transform:translate(-50%,-50%) rotateY(360deg); } } @keyframes glow{ from{ text-shadow: 0 0 10px cyan, 0 0 20px cyan, 0 0 40px magenta; } to{ text-shadow: 0 0 20px yellow, 0 0 40px red, 0 0 80px magenta; } } </style> </head> <body> <div id="logo">ADMIN HAIDANG</div> <canvas id="stars"></canvas> <script> const canvas=document.getElementById("stars"); const ctx=canvas.getContext("2d"); canvas.width=window.innerWidth; canvas.height=window.innerHeight; let stars=[]; for(let i=0;i<300;i++){ stars.push({ x:Math.random()*canvas.width, y:Math.random()*canvas.height, size:Math.random()*3, speed:Math.random()*1 }); } function draw(){ ctx.fillStyle="rgba(0,0,20,0.4)"; ctx.fillRect(0,0,canvas.width,canvas.height); ctx.fillStyle="white"; stars.forEach(s=>{ ctx.beginPath(); ctx.arc(s.x,s.y,s.size,0,Math.PI*2); ctx.fill(); s.y+=s.speed; if(s.y>canvas.height){ s.y=0; } }); requestAnimationFrame(draw); } draw(); </script> </body> </html>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>3D Neon Space</title>
+
+<style>
+
+body{
+margin:0;
+overflow:hidden;
+font-family:Arial;
+background:radial-gradient(circle,#000000,#05001a,#000000);
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+}
+
+#logo{
+
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:70px;
+font-weight:bold;
+color:white;
+text-align:center;
+
+text-shadow:
+0 0 10px #00ffff,
+0 0 20px #00ffff,
+0 0 40px #ff00ff,
+0 0 80px #ff00ff;
+
+animation:spin 8s linear infinite,
+glow 2s ease-in-out infinite alternate;
+
+}
+
+@keyframes spin{
+
+0%{
+transform:translate(-50%,-50%) rotateY(0deg);
+}
+
+100%{
+transform:translate(-50%,-50%) rotateY(360deg);
+}
+
+}
+
+@keyframes glow{
+
+from{
+text-shadow:
+0 0 10px cyan,
+0 0 20px cyan,
+0 0 40px magenta;
+}
+
+to{
+text-shadow:
+0 0 20px yellow,
+0 0 40px red,
+0 0 80px magenta;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="logo">ADMIN HAIDANG</div>
+
+<canvas id="stars"></canvas>
+
+<script>
+
+const canvas=document.getElementById("stars");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let stars=[];
+
+for(let i=0;i<300;i++){
+
+stars.push({
+
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*3,
+speed:Math.random()*1
+
+});
+
+}
+
+function draw(){
+
+ctx.fillStyle="rgba(0,0,20,0.4)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="white";
+
+stars.forEach(s=>{
+
+ctx.beginPath();
+ctx.arc(s.x,s.y,s.size,0,Math.PI*2);
+ctx.fill();
+
+s.y+=s.speed;
+
+if(s.y>canvas.height){
+s.y=0;
+}
+
+});
+
+requestAnimationFrame(draw);
+
+}
+
+draw();
+
+</script>
+
+</body>
+</html>
