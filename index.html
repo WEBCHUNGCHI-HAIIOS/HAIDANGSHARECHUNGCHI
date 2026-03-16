@@ -3,6 +3,7 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ADMIN HAIDANG</title>
 
 <style>
@@ -22,31 +23,37 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.8);
+background:rgba(0,0,0,0.85);
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
-color:white;
 text-align:center;
+color:white;
 z-index:10;
 }
 
-/* chữ thông báo */
+/* chữ */
 #intro h2{
-font-size:35px;
+font-size:30px;
 margin-bottom:40px;
-text-shadow:0 0 10px #00ffff;
+text-shadow:0 0 10px #00ffff,0 0 20px #00ffff;
 }
 
 /* nút truy cập */
 #enter{
-padding:15px 40px;
-font-size:20px;
+padding:15px 45px;
+font-size:22px;
 background:#00ff88;
 border:none;
-border-radius:10px;
+border-radius:12px;
 cursor:pointer;
+box-shadow:0 0 20px #00ff88;
+}
+
+/* hiệu ứng nút */
+#enter:hover{
+transform:scale(1.1);
 }
 
 /* video nền */
@@ -56,16 +63,17 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-object-fit:contain;
+object-fit:cover;
 z-index:-1;
 }
 
+/* chữ ADMIN */
 h1{
 position:absolute;
-top:60px;
+top:40px;
 width:100%;
 text-align:center;
-font-size:60px;
+font-size:50px;
 color:#00ffff;
 text-shadow:0 0 20px #00ffff,0 0 40px #00ffff;
 }
@@ -77,11 +85,12 @@ text-shadow:0 0 20px #00ffff,0 0 40px #00ffff;
 <body>
 
 <div id="intro">
+
 <h2>
-   ADMIN HAIDANG<br>
+ADMIN HAIDANG<br>
 NHẬN GDTG - ĐỔI TIỀN 24/7<br>
-  THU SLL ALL GAME<br>
-   CÂN ALL DỊCH VỤ
+THU SLL ALL GAME<br>
+CÂN ALL DỊCH VỤ
 </h2>
 
 <button id="enter">TRUY CẬP</button>
@@ -96,11 +105,11 @@ NHẬN GDTG - ĐỔI TIỀN 24/7<br>
 
 <script>
 
-let btn = document.getElementById("enter");
-let intro = document.getElementById("intro");
-let video = document.getElementById("video");
+let btn=document.getElementById("enter");
+let intro=document.getElementById("intro");
+let video=document.getElementById("video");
 
-btn.onclick = function(){
+btn.onclick=function(){
 
 intro.style.display="none";
 
