@@ -5,12 +5,13 @@
 <title>ADMIN HAIDANG</title>
 
 <style>
+
 body{
 margin:0;
 background:black;
 color:white;
-font-family:Arial;
 text-align:center;
+font-family:Arial;
 overflow:hidden;
 }
 
@@ -18,12 +19,6 @@ overflow:hidden;
 font-size:60px;
 margin-top:40px;
 text-shadow:0 0 10px cyan,0 0 20px cyan,0 0 40px magenta;
-animation:spin 8s linear infinite;
-}
-
-@keyframes spin{
-0%{transform:rotateY(0deg);}
-100%{transform:rotateY(360deg);}
 }
 
 video{
@@ -39,21 +34,22 @@ top:0;
 left:0;
 z-index:-1;
 }
-</style>
 
+</style>
 </head>
 
 <body>
 
-<div id="logo">ADMIN HAIDANG</div>
+<h1 id="logo">ADMIN HAIDANG</h1>
 
 <video controls autoplay loop>
-<source src="video.mp4" type="video/mp4">
+<source src="video.mp3">
 </video>
 
 <canvas id="stars"></canvas>
 
 <script>
+
 const canvas=document.getElementById("stars");
 const ctx=canvas.getContext("2d");
 
@@ -85,12 +81,14 @@ s.y+=0.3;
 if(s.y>canvas.height){
 s.y=0;
 }
+
 });
 
 requestAnimationFrame(draw);
 }
 
 draw();
+
 </script>
 
 </body>
