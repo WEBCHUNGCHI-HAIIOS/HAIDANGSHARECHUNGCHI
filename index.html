@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -5,24 +6,19 @@
 <title>ADMIN HAIDANG</title>
 
 <style>
-
 body{
 margin:0;
 background:black;
 color:white;
 font-family:Arial;
 text-align:center;
+overflow:hidden;
 }
 
 #logo{
 font-size:60px;
 margin-top:40px;
-
-text-shadow:
-0 0 10px cyan,
-0 0 20px cyan,
-0 0 40px magenta;
-
+text-shadow:0 0 10px cyan,0 0 20px cyan,0 0 40px magenta;
 animation:spin 8s linear infinite;
 }
 
@@ -32,27 +28,72 @@ animation:spin 8s linear infinite;
 }
 
 video{
-margin-top:50px;
-width:600px;
+margin-top:40px;
+width:700px;
 border-radius:20px;
-
-box-shadow:
-0 0 20px cyan,
-0 0 40px magenta;
-
+box-shadow:0 0 30px cyan,0 0 60px magenta;
 }
 
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
 </style>
+
 </head>
 
 <body>
 
 <div id="logo">ADMIN HAIDANG</div>
 
-<video controls autoplay>
+<video controls autoplay loop>
 <source src="video.mp4" type="video/mp4">
-Trình duyệt không hỗ trợ video
 </video>
+
+<canvas id="stars"></canvas>
+
+<script>
+const canvas=document.getElementById("stars");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let stars=[];
+
+for(let i=0;i<200;i++){
+stars.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*2
+});
+}
+
+function draw(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="white";
+
+stars.forEach(s=>{
+ctx.beginPath();
+ctx.arc(s.x,s.y,s.size,0,Math.PI*2);
+ctx.fill();
+
+s.y+=0.3;
+
+if(s.y>canvas.height){
+s.y=0;
+}
+});
+
+requestAnimationFrame(draw);
+}
+
+draw();
+</script>
 
 </body>
 </html>
+```
