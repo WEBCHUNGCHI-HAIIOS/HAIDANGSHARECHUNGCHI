@@ -5,7 +5,6 @@
 <title>ADMIN HAIDANG</title>
 
 <style>
-
 body{
 margin:0;
 padding:0;
@@ -34,7 +33,6 @@ font-size:60px;
 color:#00ffff;
 text-shadow:0 0 20px #00ffff,0 0 40px #00ffff;
 }
-
 </style>
 </head>
 
@@ -42,17 +40,20 @@ text-shadow:0 0 20px #00ffff,0 0 40px #00ffff;
 
 <h1>ADMIN HAIDANG</h1>
 
-<video autoplay muted loop id="video">
+<video id="bgvideo" autoplay muted loop playsinline>
 <source src="nhac.mp4" type="video/mp4">
 </video>
 
 <script>
-let v = document.getElementById("video");
+const v = document.getElementById("bgvideo");
 
-setTimeout(() => {
-v.muted = false;
-v.play();
-},1000);
+window.addEventListener("load", () => {
+  v.play().catch(()=>{});
+  setTimeout(()=>{
+    v.muted = false;
+    v.play().catch(()=>{});
+  },500);
+});
 </script>
 
 </body>
