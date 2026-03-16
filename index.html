@@ -1,18 +1,55 @@
 <!DOCTYPE html>
+
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
 <title>ADMIN HAIDANG</title>
 
 <style>
+
 body{
 margin:0;
 padding:0;
-overflow:hidden;
 background:black;
 font-family:Arial;
+overflow:hidden;
 }
 
+/* màn hình thông báo */
+#intro{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+color:white;
+text-align:center;
+z-index:10;
+}
+
+/* chữ thông báo */
+#intro h2{
+font-size:35px;
+margin-bottom:40px;
+text-shadow:0 0 10px #00ffff;
+}
+
+/* nút truy cập */
+#enter{
+padding:15px 40px;
+font-size:20px;
+background:#00ff88;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+
+/* video nền */
 video{
 position:fixed;
 top:0;
@@ -20,7 +57,6 @@ left:0;
 width:100%;
 height:100%;
 object-fit:contain;
-background:black;
 z-index:-1;
 }
 
@@ -33,27 +69,45 @@ font-size:60px;
 color:#00ffff;
 text-shadow:0 0 20px #00ffff,0 0 40px #00ffff;
 }
+
 </style>
+
 </head>
 
 <body>
 
+<div id="intro">
+<h2>
+ADMIN HAIDANG<br>
+NHẬN GDTG - ĐỔI TIỀN 24/7<br>
+THU SLL ALL GAME<br>
+CÂN ALL DỊCH VỤ
+</h2>
+
+<button id="enter">TRUY CẬP</button>
+
+</div>
+
 <h1>ADMIN HAIDANG</h1>
 
-<video id="bgvideo" autoplay muted loop playsinline>
+<video id="video" loop>
 <source src="nhac.mp4" type="video/mp4">
 </video>
 
 <script>
-const v = document.getElementById("bgvideo");
 
-window.addEventListener("load", () => {
-  v.play().catch(()=>{});
-  setTimeout(()=>{
-    v.muted = false;
-    v.play().catch(()=>{});
-  },500);
-});
+let btn = document.getElementById("enter");
+let intro = document.getElementById("intro");
+let video = document.getElementById("video");
+
+btn.onclick = function(){
+
+intro.style.display="none";
+
+video.play();
+
+}
+
 </script>
 
 </body>
