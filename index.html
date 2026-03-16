@@ -21,53 +21,66 @@ left:0;
 
 #logo{
 position:absolute;
-top:50%;
+top:15%;
 left:50%;
-transform:translate(-50%,-50%);
-font-size:80px;
+transform:translateX(-50%);
+font-size:70px;
 font-weight:bold;
 color:white;
-text-align:center;
 
 text-shadow:
 0 0 10px cyan,
 0 0 20px cyan,
 0 0 40px magenta,
-0 0 80px magenta,
-0 0 120px blue;
+0 0 80px magenta;
 
-animation:spin 10s linear infinite,
+animation:spin 8s linear infinite,
 glow 2s infinite alternate;
 }
 
 @keyframes spin{
-
-0%{
-transform:translate(-50%,-50%) rotateY(0deg);
-}
-
-100%{
-transform:translate(-50%,-50%) rotateY(360deg);
-}
-
+0%{transform:translateX(-50%) rotateY(0deg);}
+100%{transform:translateX(-50%) rotateY(360deg);}
 }
 
 @keyframes glow{
 
 from{
 text-shadow:
+0 0 10px cyan,
 0 0 20px cyan,
-0 0 40px cyan,
-0 0 80px magenta;
+0 0 40px magenta;
 }
 
 to{
 text-shadow:
-0 0 40px yellow,
-0 0 80px red,
-0 0 120px magenta;
+0 0 20px yellow,
+0 0 40px red,
+0 0 80px magenta;
 }
 
+}
+
+#videobox{
+
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+
+border-radius:20px;
+overflow:hidden;
+
+box-shadow:
+0 0 20px cyan,
+0 0 40px magenta,
+0 0 80px blue;
+
+}
+
+video{
+width:600px;
+display:block;
 }
 
 </style>
@@ -76,6 +89,12 @@ text-shadow:
 <body>
 
 <div id="logo">ADMIN HAIDANG</div>
+
+<div id="videobox">
+<video controls>
+<source src="video.mp4" type="video/mp4">
+</video>
+</div>
 
 <canvas id="space"></canvas>
 
@@ -88,29 +107,14 @@ canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 
 let stars=[];
-let meteors=[];
 
-for(let i=0;i<400;i++){
+for(let i=0;i<300;i++){
 
 stars.push({
-
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 size:Math.random()*2,
 speed:Math.random()*1
-
-});
-
-}
-
-for(let i=0;i<5;i++){
-
-meteors.push({
-
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-speed:5+Math.random()*5
-
 });
 
 }
@@ -132,27 +136,6 @@ s.y+=s.speed;
 
 if(s.y>canvas.height){
 s.y=0;
-}
-
-});
-
-ctx.strokeStyle="cyan";
-
-meteors.forEach(m=>{
-
-ctx.beginPath();
-ctx.moveTo(m.x,m.y);
-ctx.lineTo(m.x-80,m.y+20);
-ctx.stroke();
-
-m.x+=m.speed;
-m.y+=m.speed;
-
-if(m.x>canvas.width || m.y>canvas.height){
-
-m.x=Math.random()*canvas.width;
-m.y=0;
-
 }
 
 });
