@@ -9,7 +9,7 @@
 body{
 margin:0;
 overflow:hidden;
-background:radial-gradient(circle,#000000,#05001a,#000000);
+background:black;
 font-family:Arial;
 }
 
@@ -33,10 +33,11 @@ text-shadow:
 0 0 10px cyan,
 0 0 20px cyan,
 0 0 40px magenta,
-0 0 80px magenta;
+0 0 80px magenta,
+0 0 120px blue;
 
-animation:spin 8s linear infinite,
-glow 2s ease-in-out infinite alternate;
+animation:spin 10s linear infinite,
+glow 2s infinite alternate;
 }
 
 @keyframes spin{
@@ -55,16 +56,16 @@ transform:translate(-50%,-50%) rotateY(360deg);
 
 from{
 text-shadow:
-0 0 10px cyan,
 0 0 20px cyan,
-0 0 40px magenta;
+0 0 40px cyan,
+0 0 80px magenta;
 }
 
 to{
 text-shadow:
-0 0 20px yellow,
-0 0 40px red,
-0 0 80px magenta;
+0 0 40px yellow,
+0 0 80px red,
+0 0 120px magenta;
 }
 
 }
@@ -87,6 +88,7 @@ canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 
 let stars=[];
+let meteors=[];
 
 for(let i=0;i<400;i++){
 
@@ -94,8 +96,20 @@ stars.push({
 
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
-size:Math.random()*3,
-speed:Math.random()*1.5
+size:Math.random()*2,
+speed:Math.random()*1
+
+});
+
+}
+
+for(let i=0;i<5;i++){
+
+meteors.push({
+
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+speed:5+Math.random()*5
 
 });
 
@@ -118,6 +132,27 @@ s.y+=s.speed;
 
 if(s.y>canvas.height){
 s.y=0;
+}
+
+});
+
+ctx.strokeStyle="cyan";
+
+meteors.forEach(m=>{
+
+ctx.beginPath();
+ctx.moveTo(m.x,m.y);
+ctx.lineTo(m.x-80,m.y+20);
+ctx.stroke();
+
+m.x+=m.speed;
+m.y+=m.speed;
+
+if(m.x>canvas.width || m.y>canvas.height){
+
+m.x=Math.random()*canvas.width;
+m.y=0;
+
 }
 
 });
