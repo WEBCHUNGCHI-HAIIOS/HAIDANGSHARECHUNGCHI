@@ -1,59 +1,102 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Real 3D World - Full Version</title>
+    <title>Siêu Chiến Binh 3D - HTML Edition</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
+    <style>
+        #ui {
+            position: fixed; top: 20px; left: 20px; color: #0f0;
+            font-family: 'Courier New', Courier, monospace;
+            background: rgba(0,0,0,0.8); padding: 15px;
+            border: 2px solid #0f0; border-radius: 5px; pointer-events: none;
+        }
+        #kill-feed {
+            position: fixed; top: 20px; right: 20px; color: red;
+            font-weight: bold; font-size: 20px;
+        }
+    </style>
 </head>
 <body>
-    <a-scene physics="gravity: -9.8; debug: false" fog="type: exponential; color: #AAC; density: 0.015;">
-        
+
+    <div id="ui">
+        ĐỊCH CÒN SỐNG: <span id="alive">50</span><br>
+        MẠNG ĐÃ HẠ: <span id="kills">0</span>
+    </div>
+    <div id="kill-feed"></div>
+
+    <a-scene>
         <a-assets>
-            <img id="sky_texture" src="https://raw.githubusercontent.com/WEBCHUNGCHI-HAIIOS/HAIDANGSHARECHUNGCHI/main/bau_troi.jpg">
-            <img id="ground_texture" src="https://raw.githubusercontent.com/WEBCHUNGCHI-HAIIOS/HAIDANGSHARECHUNGCHI/main/co.jpg">
-            <img id="wall_texture" src="https://raw.githubusercontent.com/WEBCHUNGCHI-HAIIOS/HAIDANGSHARECHUNGCHI/main/gach.jpg">
+            <img id="sky_texture" src="https://webchungchi-haiios.github.io/haidangsharechungchi/bau_troi.jpg">
+            <img id="ground_texture" src="https://webchungchi-haiios.github.io/haidangsharechungchi/co.jpg">
+            <img id="wall_texture" src="https://webchungchi-haiios.github.io/haidangsharechungchi/gach.jpg">
         </a-assets>
 
-        <a-sky src="#sky_texture" rotation="0 -90 0"></a-sky>
+        <a-sky src="#sky_texture"></a-sky>
+        <a-plane position="0 0 0" rotation="-90 0 0" width="200" height="200" src="#ground_texture" repeat="50 50"></a-plane>
 
-        <a-plane static-body 
-                 position="0 0 0" 
-                 rotation="-90 0 0" 
-                 width="1000" height="1000" 
-                 src="#ground_texture" 
-                 repeat="200 200">
-        </a-plane>
-
-        <a-box static-body position="-5 2 -10" width="4" height="4" depth="4" src="#wall_texture"></a-box>
-        <a-box static-body position="8 2 -15" width="4" height="4" depth="4" src="#wall_texture"></a-box>
-        <a-box static-body position="0 2 -25" width="20" height="5" depth="1" src="#wall_texture"></a-box>
-        
-        <a-sphere static-body position="0 8 -15" radius="2" color="gold" shadow></a-sphere>
-
-        <a-entity id="rig" 
-                  movement-controls="speed: 0.3;" 
-                  kinematic-body 
-                  jump-ability="distance: 1.8;"
-                  position="0 0 0">
-            <a-entity camera 
-                      position="0 1.6 0" 
-                      look-controls="pointerLockEnabled: true">
-                <a-cursor color="#FF0000" radius="0.005"></a-cursor>
+        <a-entity id="rig" movement-controls="speed: 0.3">
+            <a-entity camera position="0 1.6 0" look-controls="pointerLockEnabled: true">
+                <a-entity id="gun" position="0.3 -0.2 -0.5">
+                    <a-box width="0.1" height="0.15" depth="0.5" color="#333"></a-box>
+                    <a-box width="0.08" height="0.2" depth="0.1" position="0 -0.1 0.2" color="#222"></a-box>
+                </a-entity>
+                
+                <a-cursor color="red" radius="0.005"></a-cursor>
             </a-entity>
         </a-entity>
 
-        <a-light type="ambient" color="#BBB"></a-light>
-        <a-light type="directional" color="#FFF" intensity="0.8" position="-1 10 5" castShadow="true"></a-light>
+        <a-light type="ambient" intensity="0.6"></a-light>
+        <a-light type="directional" position="1 10 2" intensity="0.8"></a-light>
 
+        <a-entity id="enemies-container"></a-entity>
     </a-scene>
 
-    <div style="position: fixed; bottom: 20px; left: 20px; color: white; font-family: sans-serif; background: rgba(0,0,0,0.7); padding: 15px; border-radius: 10px; border: 1px solid #00ff00; pointer-events: none;">
-        <h3 style="margin: 0 0 10px 0; color: #00ff00;">GAME 3D CỦA TÔI</h3>
-        - <b>Click chuột</b>: Để bắt đầu nhìn xung quanh<br>
-        - <b>W, A, S, D</b>: Để di chuyển<br>
-        - <b>Phím Cách (Space)</b>: Để Nhảy<br>
-        - <b>Phím ESC</b>: Để thoát khóa chuột
-    </div>
+    <script>
+        let kills = 0;
+        let alive = 50;
+        const enemiesContainer = document.getElementById('enemies-container');
+        const killsEl = document.getElementById('kills');
+        const aliveEl = document.getElementById('alive');
+        const killFeed = document.getElementById('kill-feed');
+
+        // Tạo 50 kẻ địch
+        for (let i = 0; i < 50; i++) {
+            let enemy = document.createElement('a-sphere');
+            let x = (Math.random() - 0.5) * 100;
+            let z = (Math.random() - 0.5) * 100;
+            
+            enemy.setAttribute('position', `${x} 1.25 ${z}`);
+            enemy.setAttribute('radius', '1.25');
+            enemy.setAttribute('color', '#EF2D5E');
+            enemy.setAttribute('class', 'enemy');
+            
+            // Địch di chuyển lung tung
+            enemy.setAttribute('animation', `property: position; to: ${x + (Math.random()-0.5)*10} 1.25 ${z + (Math.random()-0.5)*10}; dur: 3000; loop: true; dir: alternate`);
+            
+            enemiesContainer.appendChild(enemy);
+        }
+
+        // Logic Bắn súng
+        window.addEventListener('click', () => {
+            const cursor = document.querySelector('a-cursor');
+            let intersection = cursor.components.raycaster.getIntersection(document.querySelectorAll('.enemy'));
+            
+            if (intersection) {
+                let target = intersection.object.el;
+                target.parentNode.removeChild(target); // Xóa địch
+                
+                // Cập nhật thông số
+                kills++;
+                alive--;
+                killsEl.innerText = kills;
+                aliveEl.innerText = alive;
+                
+                // Thông báo Kill
+                killFeed.innerText = "HẠ GỤC ĐỊCH! 🔥";
+                setTimeout(() => { killFeed.innerText = ""; }, 1000);
+            }
+        });
+    </script>
 </body>
 </html>
