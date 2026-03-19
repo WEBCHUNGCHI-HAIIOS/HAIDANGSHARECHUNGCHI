@@ -1,34 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Real 3D World</title>
+    <title>My Real 3D World - Full Version</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
 </head>
 <body>
-    <a-scene shadow="type: pcfsoft" fog="type: exponential; color: #AAC; density: 0.015;">
+    <a-scene physics="gravity: -9.8; debug: false" fog="type: exponential; color: #AAC; density: 0.015;">
         
         <a-assets>
-            <img id="sky" src="bau_troi.jpg">
-            <img id="grass" src="co.jpg">
-            <img id="wall" src="gach.jpg">
+            <img id="sky_texture" src="https://raw.githubusercontent.com/WEBCHUNGCHI-HAIIOS/HAIDANGSHARECHUNGCHI/main/bau_troi.jpg">
+            <img id="ground_texture" src="https://raw.githubusercontent.com/WEBCHUNGCHI-HAIIOS/HAIDANGSHARECHUNGCHI/main/co.jpg">
+            <img id="wall_texture" src="https://raw.githubusercontent.com/WEBCHUNGCHI-HAIIOS/HAIDANGSHARECHUNGCHI/main/gach.jpg">
         </a-assets>
 
-        <a-sky src="#sky" rotation="0 -90 0"></a-sky>
+        <a-sky src="#sky_texture" rotation="0 -90 0"></a-sky>
 
-        <a-plane position="0 0 0" 
+        <a-plane static-body 
+                 position="0 0 0" 
                  rotation="-90 0 0" 
                  width="1000" height="1000" 
-                 src="#grass" 
-                 repeat="200 200"
-                 shadow="receive: true">
+                 src="#ground_texture" 
+                 repeat="200 200">
         </a-plane>
 
-        <a-box position="-5 2 -10" width="4" height="4" depth="4" src="#wall" shadow></a-box>
-        <a-box position="5 2 -15" width="4" height="4" depth="4" src="#wall" shadow></a-box>
-        <a-box position="0 2 -20" width="10" height="4" depth="1" src="#wall" shadow></a-box>
+        <a-box static-body position="-5 2 -10" width="4" height="4" depth="4" src="#wall_texture"></a-box>
+        <a-box static-body position="8 2 -15" width="4" height="4" depth="4" src="#wall_texture"></a-box>
+        <a-box static-body position="0 2 -25" width="20" height="5" depth="1" src="#wall_texture"></a-box>
+        
+        <a-sphere static-body position="0 8 -15" radius="2" color="gold" shadow></a-sphere>
 
-        <a-entity id="rig" movement-controls="speed: 0.3; constrainToNavMesh: true">
+        <a-entity id="rig" 
+                  movement-controls="speed: 0.3;" 
+                  kinematic-body 
+                  jump-ability="distance: 1.8;"
+                  position="0 0 0">
             <a-entity camera 
                       position="0 1.6 0" 
                       look-controls="pointerLockEnabled: true">
@@ -37,20 +44,16 @@
         </a-entity>
 
         <a-light type="ambient" color="#BBB"></a-light>
-        <a-light type="directional" 
-                 color="#FFF" 
-                 intensity="0.8" 
-                 position="-1 10 5" 
-                 castShadow="true">
-        </a-light>
+        <a-light type="directional" color="#FFF" intensity="0.8" position="-1 10 5" castShadow="true"></a-light>
 
     </a-scene>
 
-    <div style="position: fixed; bottom: 20px; left: 20px; color: white; font-family: sans-serif; background: rgba(0,0,0,0.6); padding: 15px; border-radius: 10px; border: 1px solid #fff;">
-        <b>CÁCH ĐIỀU KHIỂN:</b><br>
-        - <b>Click chuột</b> vào màn hình để khóa chuột và nhìn xung quanh.<br>
-        - Dùng <b>W, A, S, D</b> để di chuyển nhân vật.<br>
-        - Nhấn <b>ESC</b> để hiện lại chuột.
+    <div style="position: fixed; bottom: 20px; left: 20px; color: white; font-family: sans-serif; background: rgba(0,0,0,0.7); padding: 15px; border-radius: 10px; border: 1px solid #00ff00; pointer-events: none;">
+        <h3 style="margin: 0 0 10px 0; color: #00ff00;">GAME 3D CỦA TÔI</h3>
+        - <b>Click chuột</b>: Để bắt đầu nhìn xung quanh<br>
+        - <b>W, A, S, D</b>: Để di chuyển<br>
+        - <b>Phím Cách (Space)</b>: Để Nhảy<br>
+        - <b>Phím ESC</b>: Để thoát khóa chuột
     </div>
 </body>
 </html>
