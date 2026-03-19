@@ -1,148 +1,68 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Game Bắn Súng</title>
-
-<style>
-body{
-    margin:0;
-    background:black;
-    overflow:hidden;
-}
-
-#player{
-    width:40px;
-    height:40px;
-    background:cyan;
-    position:absolute;
-    left:50%;
-    top:50%;
-}
-
-.bullet{
-    width:6px;
-    height:12px;
-    background:yellow;
-    position:absolute;
-}
-
-.enemy{
-    width:30px;
-    height:30px;
-    background:red;
-    position:absolute;
-}
-
-#score{
-    color:white;
-    position:absolute;
-    top:10px;
-    left:10px;
-}
-</style>
+    <title>My First 3D Game</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { display: block; }
+    </style>
 </head>
-
 <body>
-
-<div id="player"></div>
-<div id="score">0</div>
-
-<script>
-let player = document.getElementById("player");
-let scoreText = document.getElementById("score");
-
-let x = window.innerWidth/2;
-let y = window.innerHeight/2;
-let score = 0;
-
-function update(){
-    player.style.left = x + "px";
-    player.style.top = y + "px";
-}
-
-// di chuyển
-document.addEventListener("keydown", e=>{
-    if(e.key=="w") y-=20;
-    if(e.key=="s") y+=20;
-    if(e.key=="a") x-=20;
-    if(e.key=="d") x+=20;
-    update();
-});
-
-// bắn
-document.addEventListener("click", ()=>{
-    let bullet = document.createElement("div");
-    bullet.className="bullet";
-    bullet.style.left = x + "px";
-    bullet.style.top = y + "px";
-    document.body.appendChild(bullet);
-
-    let move = setInterval(()=>{
-        let top = parseInt(bullet.style.top);
-        top -= 10;
-        bullet.style.top = top + "px";
-
-        document.querySelectorAll(".enemy").forEach(enemy=>{
-            let e = enemy.getBoundingClientRect();
-            let b = bullet.getBoundingClientRect();
-
-            if(
-                b.top < e.bottom &&
-                b.bottom > e.top &&
-                b.left < e.right &&
-                b.right > e.left
-            ){
-                enemy.remove();
-                bullet.remove();
-                score++;
-                scoreText.innerText = score;
-                clearInterval(move);
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
             }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+
+        // 1. Tạo "Sân khấu" (Scene)
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x222222);
+
+        // 2. Tạo "Máy quay" (Camera)
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+
+        // 3. Tạo "Máy chiếu" (Renderer) để vẽ lên màn hình
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // 4. Tạo "Vật thể" (Cái hộp 3D)
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+        const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 }); // Màu xanh lá
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+
+        // 5. Thêm Ánh sáng (Để thấy được khối 3D)
+        const light = new THREE.PointLight(0xffffff, 50);
+        light.position.set(2, 2, 2);
+        scene.add(light);
+        scene.add(new THREE.AmbientLight(0x404040));
+
+        // 6. Vòng lặp để Game chạy (Animation)
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Xoay cái hộp
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Xử lý khi co giãn màn hình
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
         });
-
-        if(top < 0){
-            bullet.remove();
-            clearInterval(move);
-        }
-    },20);
-});
-
-// spawn enemy
-function spawnEnemy(){
-    let enemy = document.createElement("div");
-    enemy.className="enemy";
-    enemy.style.left = Math.random()*window.innerWidth + "px";
-    enemy.style.top = "0px";
-    document.body.appendChild(enemy);
-
-    let move = setInterval(()=>{
-        let top = parseInt(enemy.style.top);
-        top += 4;
-        enemy.style.top = top + "px";
-
-        let p = player.getBoundingClientRect();
-        let e = enemy.getBoundingClientRect();
-
-        if(
-            e.bottom > p.top &&
-            e.left < p.right &&
-            e.right > p.left
-        ){
-            alert("💀 Game Over! Điểm: " + score);
-            location.reload();
-        }
-
-        if(top > window.innerHeight){
-            enemy.remove();
-            clearInterval(move);
-        }
-    },30);
-}
-
-setInterval(spawnEnemy,1000);
-update();
-</script>
-
+    </script>
 </body>
 </html>
