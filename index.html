@@ -1,36 +1,56 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>3D Real World - VR Experience</title>
+<head>
+    <title>My Real 3D World</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
-  </head>
-  <body>
-    <a-scene symbols="physics: ammo; gravity: -9.8;">
-      
-      <a-sky src="https://cdn.polyhaven.com/asset_img/primary/clouds_layers.jpg?height=720" rotation="0 -90 0"></a-sky>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
+</head>
+<body>
+    <a-scene shadow="type: pcfsoft" fog="type: exponential; color: #AAC; density: 0.015;">
+        
+        <a-assets>
+            <img id="sky" src="bau_troi.jpg">
+            <img id="grass" src="co.jpg">
+            <img id="wall" src="gach.jpg">
+        </a-assets>
 
-      <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" 
-               src="https://raw.githubusercontent.com/aframevr/sample-assets/master/assets/images/textures/ground/grasslight-big.jpg" 
-               repeat="50 50"></a-plane>
+        <a-sky src="#sky" rotation="0 -90 0"></a-sky>
 
-      <a-light type="ambient" color="#BBB"></a-light>
-      <a-light type="directional" color="#FFF" intensity="0.6" position="-1 1 2"></a-light>
+        <a-plane position="0 0 0" 
+                 rotation="-90 0 0" 
+                 width="1000" height="1000" 
+                 src="#grass" 
+                 repeat="200 200"
+                 shadow="receive: true">
+        </a-plane>
 
-      <a-box position="0 1 -5" width="4" height="2" depth="4" color="#8B4513" src="https://raw.githubusercontent.com/aframevr/sample-assets/master/assets/images/textures/walls/brick_diffuse.jpg"></a-box>
-      <a-cone position="0 3 -5" radius-bottom="3" height="2" color="#444"></a-cone>
+        <a-box position="-5 2 -10" width="4" height="4" depth="4" src="#wall" shadow></a-box>
+        <a-box position="5 2 -15" width="4" height="4" depth="4" src="#wall" shadow></a-box>
+        <a-box position="0 2 -20" width="10" height="4" depth="1" src="#wall" shadow></a-box>
 
-      <a-entity id="rig" movement-controls="speed: 0.2;">
-        <a-entity camera position="0 1.6 0" look-controls="pointerLockEnabled: true">
-            <a-cursor id="cursor" color="white" radius="0.005"></a-cursor>
+        <a-entity id="rig" movement-controls="speed: 0.3; constrainToNavMesh: true">
+            <a-entity camera 
+                      position="0 1.6 0" 
+                      look-controls="pointerLockEnabled: true">
+                <a-cursor color="#FF0000" radius="0.005"></a-cursor>
+            </a-entity>
         </a-entity>
-      </a-entity>
 
-      <div style="position: fixed; top: 10px; left: 10px; color: white; font-family: sans-serif; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 5px;">
-        Sử dụng <b>WASD</b> để đi lại<br>
-        Click chuột vào màn hình để <b>Xoay nhìn</b> (Nhấn ESC để thoát chuột)
-      </div>
+        <a-light type="ambient" color="#BBB"></a-light>
+        <a-light type="directional" 
+                 color="#FFF" 
+                 intensity="0.8" 
+                 position="-1 10 5" 
+                 castShadow="true">
+        </a-light>
 
     </a-scene>
-  </body>
+
+    <div style="position: fixed; bottom: 20px; left: 20px; color: white; font-family: sans-serif; background: rgba(0,0,0,0.6); padding: 15px; border-radius: 10px; border: 1px solid #fff;">
+        <b>CÁCH ĐIỀU KHIỂN:</b><br>
+        - <b>Click chuột</b> vào màn hình để khóa chuột và nhìn xung quanh.<br>
+        - Dùng <b>W, A, S, D</b> để di chuyển nhân vật.<br>
+        - Nhấn <b>ESC</b> để hiện lại chuột.
+    </div>
+</body>
 </html>
