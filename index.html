@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Game Né Vật Rơi</title>
+<title>Game Bắn Súng</title>
 
 <style>
 body{
@@ -12,33 +12,34 @@ body{
 }
 
 #player{
-    width:60px;
-    height:60px;
+    width:40px;
+    height:40px;
     background:cyan;
     position:absolute;
-    bottom:20px;
     left:50%;
-    transform:translateX(-50%);
-    border-radius:10px;
+    top:50%;
 }
 
-.fall{
+.bullet{
+    width:6px;
+    height:12px;
+    background:yellow;
+    position:absolute;
+}
+
+.enemy{
     width:30px;
     height:30px;
     background:red;
     position:absolute;
-    top:0;
-    border-radius:5px;
 }
 
 #score{
+    color:white;
     position:absolute;
     top:10px;
     left:10px;
-    color:white;
-    font-size:20px;
 }
-
 </style>
 </head>
 
@@ -51,68 +52,96 @@ body{
 let player = document.getElementById("player");
 let scoreText = document.getElementById("score");
 
-let x = window.innerWidth / 2;
+let x = window.innerWidth/2;
+let y = window.innerHeight/2;
 let score = 0;
 
-function updatePlayer(){
+function update(){
     player.style.left = x + "px";
+    player.style.top = y + "px";
 }
 
-// 🎮 Điều khiển bằng phím
+// di chuyển
 document.addEventListener("keydown", e=>{
-    if(e.key=="ArrowLeft") x -= 30;
-    if(e.key=="ArrowRight") x += 30;
-    updatePlayer();
+    if(e.key=="w") y-=20;
+    if(e.key=="s") y+=20;
+    if(e.key=="a") x-=20;
+    if(e.key=="d") x+=20;
+    update();
 });
 
-// 📱 Điều khiển bằng chạm
-document.addEventListener("touchstart", e=>{
-    let touchX = e.touches[0].clientX;
-    x = touchX;
-    updatePlayer();
+// bắn
+document.addEventListener("click", ()=>{
+    let bullet = document.createElement("div");
+    bullet.className="bullet";
+    bullet.style.left = x + "px";
+    bullet.style.top = y + "px";
+    document.body.appendChild(bullet);
+
+    let move = setInterval(()=>{
+        let top = parseInt(bullet.style.top);
+        top -= 10;
+        bullet.style.top = top + "px";
+
+        document.querySelectorAll(".enemy").forEach(enemy=>{
+            let e = enemy.getBoundingClientRect();
+            let b = bullet.getBoundingClientRect();
+
+            if(
+                b.top < e.bottom &&
+                b.bottom > e.top &&
+                b.left < e.right &&
+                b.right > e.left
+            ){
+                enemy.remove();
+                bullet.remove();
+                score++;
+                scoreText.innerText = score;
+                clearInterval(move);
+            }
+        });
+
+        if(top < 0){
+            bullet.remove();
+            clearInterval(move);
+        }
+    },20);
 });
 
-// 📱 Vuốt
-document.addEventListener("touchmove", e=>{
-    let touchX = e.touches[0].clientX;
-    x = touchX;
-    updatePlayer();
-});
+// spawn enemy
+function spawnEnemy(){
+    let enemy = document.createElement("div");
+    enemy.className="enemy";
+    enemy.style.left = Math.random()*window.innerWidth + "px";
+    enemy.style.top = "0px";
+    document.body.appendChild(enemy);
 
-function spawn(){
-    let block = document.createElement("div");
-    block.className = "fall";
-    block.style.left = Math.random() * window.innerWidth + "px";
-    document.body.appendChild(block);
+    let move = setInterval(()=>{
+        let top = parseInt(enemy.style.top);
+        top += 4;
+        enemy.style.top = top + "px";
 
-    let y = 0;
-
-    let fall = setInterval(()=>{
-        y += 6;
-        block.style.top = y + "px";
-
-        let playerRect = player.getBoundingClientRect();
-        let blockRect = block.getBoundingClientRect();
+        let p = player.getBoundingClientRect();
+        let e = enemy.getBoundingClientRect();
 
         if(
-            blockRect.bottom > playerRect.top &&
-            blockRect.left < playerRect.right &&
-            blockRect.right > playerRect.left
+            e.bottom > p.top &&
+            e.left < p.right &&
+            e.right > p.left
         ){
             alert("💀 Game Over! Điểm: " + score);
             location.reload();
         }
 
-        if(y > window.innerHeight){
-            score++;
-            scoreText.innerText = score;
-            block.remove();
-            clearInterval(fall);
+        if(top > window.innerHeight){
+            enemy.remove();
+            clearInterval(move);
         }
     },30);
 }
 
-setInterval(spawn,800);
+setInterval(spawnEnemy,1000);
+update();
 </script>
 
 </body>
