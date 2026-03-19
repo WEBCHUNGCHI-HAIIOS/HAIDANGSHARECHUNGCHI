@@ -1,68 +1,36 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>My First 3D Game</title>
-    <style>
-        body { margin: 0; overflow: hidden; }
-        canvas { display: block; }
-    </style>
-</head>
-<body>
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
-            }
-        }
-    </script>
+  <head>
+    <title>3D Real World - VR Experience</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+  </head>
+  <body>
+    <a-scene symbols="physics: ammo; gravity: -9.8;">
+      
+      <a-sky src="https://cdn.polyhaven.com/asset_img/primary/clouds_layers.jpg?height=720" rotation="0 -90 0"></a-sky>
 
-    <script type="module">
-        import * as THREE from 'three';
+      <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" 
+               src="https://raw.githubusercontent.com/aframevr/sample-assets/master/assets/images/textures/ground/grasslight-big.jpg" 
+               repeat="50 50"></a-plane>
 
-        // 1. Tạo "Sân khấu" (Scene)
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x222222);
+      <a-light type="ambient" color="#BBB"></a-light>
+      <a-light type="directional" color="#FFF" intensity="0.6" position="-1 1 2"></a-light>
 
-        // 2. Tạo "Máy quay" (Camera)
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 5;
+      <a-box position="0 1 -5" width="4" height="2" depth="4" color="#8B4513" src="https://raw.githubusercontent.com/aframevr/sample-assets/master/assets/images/textures/walls/brick_diffuse.jpg"></a-box>
+      <a-cone position="0 3 -5" radius-bottom="3" height="2" color="#444"></a-cone>
 
-        // 3. Tạo "Máy chiếu" (Renderer) để vẽ lên màn hình
-        const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+      <a-entity id="rig" movement-controls="speed: 0.2;">
+        <a-entity camera position="0 1.6 0" look-controls="pointerLockEnabled: true">
+            <a-cursor id="cursor" color="white" radius="0.005"></a-cursor>
+        </a-entity>
+      </a-entity>
 
-        // 4. Tạo "Vật thể" (Cái hộp 3D)
-        const geometry = new THREE.BoxGeometry(1, 1, 1);
-        const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 }); // Màu xanh lá
-        const cube = new THREE.Mesh(geometry, material);
-        scene.add(cube);
+      <div style="position: fixed; top: 10px; left: 10px; color: white; font-family: sans-serif; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 5px;">
+        Sử dụng <b>WASD</b> để đi lại<br>
+        Click chuột vào màn hình để <b>Xoay nhìn</b> (Nhấn ESC để thoát chuột)
+      </div>
 
-        // 5. Thêm Ánh sáng (Để thấy được khối 3D)
-        const light = new THREE.PointLight(0xffffff, 50);
-        light.position.set(2, 2, 2);
-        scene.add(light);
-        scene.add(new THREE.AmbientLight(0x404040));
-
-        // 6. Vòng lặp để Game chạy (Animation)
-        function animate() {
-            requestAnimationFrame(animate);
-
-            // Xoay cái hộp
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.01;
-
-            renderer.render(scene, camera);
-        }
-
-        animate();
-
-        // Xử lý khi co giãn màn hình
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-    </script>
-</body>
+    </a-scene>
+  </body>
 </html>
