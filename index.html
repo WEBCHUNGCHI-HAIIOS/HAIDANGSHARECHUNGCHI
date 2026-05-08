@@ -1,91 +1,48 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HẢI ĐĂNG - DỊCH VỤ MẠNG XÃ HỘI UY TÍN</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            margin: 0; font-family: 'Roboto', sans-serif;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('bau_troi.jpg');
-            background-size: cover; background-attachment: fixed;
-            color: white; text-align: center;
-        }
-        .container { padding: 50px 20px; }
-        
-        /* Header */
-        header h1 { font-size: 35px; color: #00e5ff; text-transform: uppercase; margin-bottom: 10px; }
-        header p { font-size: 18px; color: #ccc; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ADMIN HONG HAI</title>
 
-        /* Danh sách dịch vụ */
-        .services {
-            display: flex; flex-wrap: wrap; justify-content: center;
-            gap: 20px; margin-top: 40px;
-        }
-        .service-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 15px; width: 280px; padding: 25px;
-            transition: 0.3s;
-        }
-        .service-card:hover { transform: translateY(-10px); border-color: #00e5ff; }
-        .service-card i { font-size: 40px; display: block; margin-bottom: 15px; }
-        .service-card h3 { color: #00e5ff; }
-        .service-card p { font-size: 14px; color: #eee; }
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
 
-        /* Nút liên hệ */
-        .contact-section { margin-top: 50px; }
-        .btn-contact {
-            display: inline-block; padding: 15px 40px;
-            margin: 10px; border-radius: 50px;
-            text-decoration: none; font-weight: bold; font-size: 18px;
-            transition: 0.3s;
-        }
-        .zalo { background: #0068ff; color: white; }
-        .fb { background: #1877f2; color: white; }
-        .btn-contact:hover { opacity: 0.8; transform: scale(1.05); }
+    body{
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:#000;
+      font-family:Arial, sans-serif;
+    }
 
-        /* Footer */
-        footer { margin-top: 60px; font-size: 13px; color: #888; padding-bottom: 30px; }
-    </style>
+    h1{
+      color:#00ffcc;
+      font-size:70px;
+      text-shadow:
+        0 0 10px #00ffcc,
+        0 0 20px #00ffcc,
+        0 0 40px #00ffcc;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow{
+      from{
+        transform:scale(1);
+      }
+      to{
+        transform:scale(1.05);
+      }
+    }
+  </style>
 </head>
+
 <body>
-
-    <div class="container">
-        <header>
-            <h1>HẢI ĐĂNG MEDIA</h1>
-            <p>Giải pháp tăng trưởng mạng xã hội - An toàn - Bảo mật - Tốc độ</p>
-        </header>
-
-        <div class="services">
-            <div class="service-card">
-                <h3>FACEBOOK SERVICE</h3>
-                <p>Tăng Like, Theo dõi, Mở khóa tài khoản, Chạy quảng cáo tối ưu ngân sách.</p>
-            </div>
-
-            <div class="service-card">
-                <h3>TIKTOK SERVICE</h3>
-                <p>Tăng Follow, View, Tym, Hỗ trợ lên xu hướng, Thiết kế kênh chuyên nghiệp.</p>
-            </div>
-
-            <div class="service-card">
-                <h3>INSTAGRAM SERVICE</h3>
-                <p>Tăng tương tác thực, Kéo Follow ngoại/nội theo yêu cầu khách hàng.</p>
-            </div>
-        </div>
-
-        <div class="contact-section">
-            <h2>LIÊN HỆ ĐỂ ĐƯỢC TƯ VẤN NGAY</h2>
-            <a href="https://zalo.me/0123456789" class="btn-contact zalo">Liên Hệ Zalo</a>
-            <a href="https://fb.com/username" class="btn-contact fb">Nhắn Tin Facebook</a>
-        </div>
-
-        <footer>
-            © 2026 Bản quyền thuộc về Hải Đăng Media. Uy tín tạo nên thương hiệu.
-        </footer>
-    </div>
-
+  <h1>ADMIN HONG HAI</h1>
 </body>
 </html>
