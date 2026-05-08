@@ -6,25 +6,64 @@
 <title>ADMIN HONG HAI</title>
 
 <style>
-body{
+*{
     margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:black;
-    font-family:Arial;
+    padding:0;
+    box-sizing:border-box;
 }
 
-h1{
+body{
+    width:100%;
+    height:100vh;
+    background:black;
+    overflow:hidden;
+    font-family:Arial, sans-serif;
+    position:relative;
+}
+
+/* Khung chữ */
+.title{
+    position:absolute;
+    top:40px;
+    width:100%;
+    text-align:center;
+}
+
+/* Dòng chữ */
+.title h1{
     color:#00ffff;
-    font-size:60px;
-    text-shadow:0 0 20px #00ffff;
+    font-size:50px;
+    font-weight:bold;
+    line-height:1.2;
+
+    text-shadow:
+        0 0 10px #00ffff,
+        0 0 20px #00ffff,
+        0 0 40px #00ffff,
+        0 0 80px #00ffff;
+
+    animation:glow 2s infinite alternate;
+}
+
+/* Hiệu ứng phát sáng */
+@keyframes glow{
+    from{
+        opacity:0.8;
+    }
+
+    to{
+        opacity:1;
+    }
 }
 </style>
 </head>
 
 <body>
-<h1>ADMIN HONG HAI</h1>
+
+<div class="title">
+    <h1>ADMIN</h1>
+    <h1>HONG HAI</h1>
+</div>
+
 </body>
 </html>
