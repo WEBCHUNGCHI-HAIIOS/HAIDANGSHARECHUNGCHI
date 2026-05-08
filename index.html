@@ -15,13 +15,23 @@
 body{
     width:100%;
     height:100vh;
-    background:black;
     overflow:hidden;
+    background:black;
     font-family:Arial, sans-serif;
-    position:relative;
 }
 
-/* Khung chữ */
+/* Video nền */
+video{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-1;
+}
+
+/* Chữ */
 .title{
     position:absolute;
     top:40px;
@@ -29,7 +39,6 @@ body{
     text-align:center;
 }
 
-/* Dòng chữ */
 .title h1{
     color:#00ffff;
     font-size:50px;
@@ -41,25 +50,18 @@ body{
         0 0 20px #00ffff,
         0 0 40px #00ffff,
         0 0 80px #00ffff;
-
-    animation:glow 2s infinite alternate;
-}
-
-/* Hiệu ứng phát sáng */
-@keyframes glow{
-    from{
-        opacity:0.8;
-    }
-
-    to{
-        opacity:1;
-    }
 }
 </style>
 </head>
 
 <body>
 
+<!-- Video nền -->
+<video autoplay controls loop playsinline>
+    <source src="snaptik.vn_.mp4" type="video/mp4">
+</video>
+
+<!-- Chữ -->
 <div class="title">
     <h1>ADMIN</h1>
     <h1>HONG HAI</h1>
