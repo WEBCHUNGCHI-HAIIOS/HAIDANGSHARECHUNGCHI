@@ -3,141 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giao Diện Kiểm Tra Tài Khoản</title>
+    <title>Tạp Hoá Hồng Hải media</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0b0c10;
-            color: #c5c6c7;
-            text-align: center;
-            padding: 40px 20px;
-        }
-        .tool-box {
-            background-color: #1f2833;
-            border: 2px solid #66fcf1;
-            padding: 30px;
-            border-radius: 10px;
-            display: inline-block;
-            max-width: 450px;
-            width: 100%;
-            box-shadow: 0 0 15px rgba(102, 252, 241, 0.5);
-        }
-        h2 { color: #66fcf1; margin-bottom: 20px; font-size: 24px; text-transform: uppercase; }
-        input {
-            width: 85%;
-            padding: 12px;
-            margin: 15px 0;
-            border-radius: 5px;
-            border: 1px solid #45f3ff;
-            background-color: #0b0c10;
-            color: #fff;
-            font-size: 16px;
-            outline: none;
-        }
-        button {
-            background-color: #66fcf1;
-            color: #0b0c10;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-        button:hover { background-color: #45f3ff; box-shadow: 0 0 10px #45f3ff; }
-        
-        /* Thanh phần trăm giống trong video */
-        .progress-container {
-            width: 90%;
-            background-color: #0b0c10;
-            border-radius: 10px;
-            margin: 20px auto;
-            display: none;
-            border: 1px solid #333;
-            overflow: hidden;
-        }
-        .progress-bar {
-            width: 0%;
-            height: 20px;
-            background: linear-gradient(90deg, #007bff, #66fcf1);
-            text-align: center;
-            line-height: 20px;
-            color: #0b0c10;
-            font-weight: bold;
-            font-size: 12px;
-            transition: width 0.1s linear;
-        }
+        /* CSS được gộp chung vào đây */
+        * { box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; margin: 0; background-color: #f8f9fa; padding-bottom: 70px; }
 
-        #status-text { margin-top: 15px; font-size: 16px; font-weight: bold; line-height: 1.5; }
-        .running { color: #ffc107; }
-        .success { color: #2deb90; text-shadow: 0 0 5px #2deb90; }
-        .danger { color: #ff4757; text-shadow: 0 0 5px #ff4757; }
+        .header { display: flex; justify-content: space-between; padding: 15px; background: #fff; border-bottom: 1px solid #ddd; align-items: center; }
+        .logo { font-weight: bold; font-size: 18px; color: #333; }
+        
+        .banner { background: #386734; color: #fff; padding: 15px; text-align: center; }
+        .container { padding: 15px; }
+
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px; }
+        .card { background: #fff; padding: 10px; text-align: center; border-radius: 5px; font-size: 12px; border: 1px solid #eee; }
+
+        .product-item { background: #fff; padding: 15px; margin-top: 15px; border-radius: 8px; border: 1px solid #ddd; }
+        .btn-buy { width: 100%; padding: 10px; background: #5a8a54; color: white; border: none; border-radius: 5px; margin-top: 10px; cursor: pointer; }
+
+        .bottom-nav { 
+            position: fixed; bottom: 0; width: 100%; background: #fff; 
+            display: flex; justify-content: space-around; padding: 12px;
+            border-top: 2px solid #ddd; font-size: 11px;
+        }
+        .bottom-nav a { text-decoration: none; color: #333; text-align: center; }
     </style>
 </head>
 <body>
 
-<div class="tool-box">
-    <h2>TOOL DAME [ HONG HAI MMO ]</h2>
-    <p>Nhập liên kết hoặc ID cần thực thi:</p>
-    <input type="text" id="target" placeholder="Nhập ID hoặc link tại đây..." />
-    <br />
-    <button onclick="runTool()">KÍCH HOẠT BOT</button>
-    
-    <div class="progress-container" id="pContainer">
-        <div class="progress-bar" id="pBar">0%</div>
-    </div>
-    
-    <div id="status-text"></div>
-</div>
+    <!-- Header -->
+    <header class="header">
+        <div class="menu-icon">☰</div>
+        <div class="logo">Tạp Hoá Hồng Hải media</div>
+        <div class="search-icon">🔍</div>
+    </header>
 
-<script>
-function runTool() {
-    let targetInput = document.getElementById("target").value;
-    let pContainer = document.getElementById("pContainer");
-    let pBar = document.getElementById("pBar");
-    let statusText = document.getElementById("status-text");
-    
-    if (targetInput.trim() === "") {
-        alert("Vui lòng nhập mục tiêu để bot thực thi!");
-        return;
-    }
-    
-    // Hiện thanh chạy phần trăm
-    pContainer.style.display = "block";
-    pBar.style.width = "0%";
-    pBar.innerText = "0%";
-    statusText.innerHTML = "<span class='running'>🤖 Đang gửi gói tin khởi tạo dữ liệu...</span>";
-    
-    let count = 0;
-    let timer = setInterval(() => {
-        count += 2; // Mỗi lần tăng 2%
-        pBar.style.width = count + "%";
-        pBar.innerText = count + "%";
-        
-        if (count == 30) {
-            statusText.innerHTML = "<span class='running'>📡 Đang kết nối máy chủ dữ liệu...</span>";
-        }
-        if (count == 60) {
-            statusText.innerHTML = "<span class='running'>🔍 Đang quét trạng thái tài khoản mục tiêu...</span>";
-        }
-        if (count == 85) {
-            statusText.innerHTML = "<span class='running'>📊 Đang tổng hợp phản hồi kết quả...</span>";
-        }
-        
-        if (count >= 100) {
-            clearInterval(timer);
-            // Trả kết quả mô phỏng ngẫu nhiên
-            let checkResult = Math.random() > 0.5;
-            if (checkResult) {
-                statusText.innerHTML = "<span class='success'>✅ TIẾN TRÌNH HOÀN TẤT:<br>Tài khoản đang Hoạt Động (Mã phản hồi: 200 OK)</span>";
-            } else {
-                statusText.innerHTML = "<span class='danger'>❌ TIẾN TRÌNH HOÀN TẤT:<br>Tài khoản đã Bị Khóa hoặc Không Tồn Tại!</span>";
-            }
-        }
-    }, 100); // Tốc độ chạy thanh phần trăm
-}
-</script>
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Banner thông báo -->
+        <div class="banner">
+            <h3>Chào mừng bạn đến với Tạp Hoá Hồng Hải media</h3>
+            <p>Hơn 68.000 Agency tin dùng - Giao tự động 24/7</p>
+        </div>
+
+        <!-- Danh mục tài nguyên -->
+        <section class="category">
+            <h4>Danh mục tài nguyên</h4>
+            <div class="grid">
+                <div class="card">Facebook</div>
+                <div class="card">Clone FB</div>
+                <div class="card">BM ADS</div>
+                <div class="card">Instagram</div>
+                <div class="card">TikTok</div>
+                <div class="card">Gmail</div>
+            </div>
+        </section>
+
+        <!-- Danh sách sản phẩm -->
+        <section class="products">
+            <h4>Danh sách sản phẩm</h4>
+            <div class="product-item">
+                <p><strong>Via Việt Cổ ZIN 0-20 Bạn Bè</strong></p>
+                <p>Năm tạo: 2008-2023 | Bảo mật: Không</p>
+                <button class="btn-buy">MUA NGAY - 45.000đ</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="#">Trang chủ</a>
+        <a href="#">Sản phẩm</a>
+        <a href="#">Nạp tiền</a>
+        <a href="#">Đơn hàng</a>
+        <a href="#">Thông tin</a>
+    </nav>
 
 </body>
 </html>
