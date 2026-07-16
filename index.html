@@ -2,75 +2,65 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tạp Hoá Thập Cẩm Hồng Hải | Media & Dịch vụ MMO</title>
+    <title>Tạp Hoá Thập Cẩm Hồng Hải | MMO Media</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-100">
 
-    <!-- Header -->
-    <nav class="bg-white shadow-lg p-4 sticky top-0 z-50">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-blue-600">HỒNG HẢI <span class="text-gray-400 font-light">MEDIA</span></h1>
-            <ul class="flex space-x-6">
-                <li><a href="#" class="hover:text-blue-600">Sản phẩm</a></li>
-                <li><a href="#" class="hover:text-blue-600">Dịch vụ MMO</a></li>
-                <li><a href="#" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Liên hệ</a></li>
-            </ul>
+    <!-- Navbar -->
+    <nav class="bg-slate-900 text-white p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between">
+            <h1 class="font-bold text-xl uppercase">Hồng Hải Media</h1>
+            <div class="space-x-4">
+                <a href="#san-pham">Sản phẩm MMO</a>
+                <a href="#dich-vu">Dịch vụ</a>
+            </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header class="bg-blue-600 text-white py-20 text-center">
-        <h2 class="text-5xl font-extrabold mb-4">Tạp Hoá Thập Cẩm Hồng Hải</h2>
-        <p class="text-xl opacity-90">Nơi cung cấp giải pháp MMO chuyên nghiệp & Sản phẩm chất lượng</p>
-    </header>
-
-    <!-- Content Section -->
-    <main class="container mx-auto py-12 px-4">
+    <!-- Main Container -->
+    <div class="container mx-auto py-10 px-4">
         
-        <!-- Section: Dịch vụ MMO -->
-        <section class="mb-16">
-            <h3 class="text-3xl font-bold mb-8 border-l-4 border-blue-600 pl-4">Dịch vụ MMO nổi bật</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition">
-                    <h4 class="text-xl font-bold mb-2">Thiết kế Web</h4>
-                    <p class="text-gray-600">Xây dựng web chuẩn SEO, hiện đại cho dân làm Affiliate.</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition">
-                    <h4 class="text-xl font-bold mb-2">Tài khoản số</h4>
-                    <p class="text-gray-600">Cung cấp tài khoản quảng cáo, tools marketing uy tín.</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition">
-                    <h4 class="text-xl font-bold mb-2">Hỗ trợ kỹ thuật</h4>
-                    <p class="text-gray-600">Support 24/7 các vấn đề về MMO và công nghệ.</p>
-                </div>
-            </div>
-        </section>
+        <!-- Bộ lọc (Giả lập chức năng hiện đại) -->
+        <div class="mb-8 flex gap-4">
+            <button onclick="render('all')" class="bg-blue-600 text-white px-4 py-2 rounded">Tất cả</button>
+            <button onclick="render('sp')" class="bg-gray-200 px-4 py-2 rounded">Sản phẩm (50)</button>
+            <button onclick="render('dv')" class="bg-gray-200 px-4 py-2 rounded">Dịch vụ (20)</button>
+        </div>
 
-        <!-- Section: Sản phẩm Tạp hoá -->
-        <section>
-            <h3 class="text-3xl font-bold mb-8 border-l-4 border-green-600 pl-4">Sản phẩm Tạp Hoá</h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <!-- Example Card -->
-                <div class="bg-white p-4 rounded-lg shadow">
-                    <div class="h-40 bg-gray-200 rounded mb-4"></div>
-                    <h4 class="font-bold">Sản phẩm A</h4>
-                    <p class="text-blue-600 font-bold">50.000đ</p>
-                </div>
-                <div class="bg-white p-4 rounded-lg shadow">
-                    <div class="h-40 bg-gray-200 rounded mb-4"></div>
-                    <h4 class="font-bold">Sản phẩm B</h4>
-                    <p class="text-blue-600 font-bold">120.000đ</p>
-                </div>
-            </div>
-        </section>
-    </main>
+        <!-- Lưới hiển thị -->
+        <div id="grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            <!-- Dữ liệu sẽ đổ vào đây bằng JS -->
+        </div>
+    </div>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-8 text-center">
-        <p>&copy; 2026 Tạp Hoá Thập Cẩm Hồng Hải. All rights reserved.</p>
-    </footer>
+    <script>
+        // Dữ liệu mẫu (Bạn chỉ cần thêm vào mảng này)
+        const data = [
+            { id: 1, type: 'sp', name: 'Tool Facebook A', price: '200k' },
+            { id: 2, type: 'dv', name: 'Thiết kế Web chuẩn SEO', price: '5tr' },
+            // ... thêm 68 mục nữa vào đây
+        ];
 
+        function render(filter) {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '';
+            
+            const filtered = filter === 'all' ? data : data.filter(item => item.type === filter);
+            
+            filtered.forEach(item => {
+                grid.innerHTML += `
+                    <div class="bg-white p-4 rounded-lg shadow hover:scale-105 transition">
+                        <div class="h-32 bg-gray-300 mb-2 rounded"></div>
+                        <h3 class="font-bold text-sm">${item.name}</h3>
+                        <p class="text-blue-600 font-bold">${item.price}</p>
+                        <button class="w-full mt-2 bg-slate-800 text-white py-1 rounded text-sm">Mua ngay</button>
+                    </div>
+                `;
+            });
+        }
+        // Gọi hàm hiển thị lần đầu
+        render('all');
+    </script>
 </body>
 </html>
