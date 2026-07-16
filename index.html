@@ -3,67 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tạp Hoá Hồng Hải media - Đăng nhập/Nạp tiền</title>
+    <title>Tạp Hoá Hồng Hải media - Modern Store</title>
     <style>
-        * { box-sizing: border-box; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #f4f6f9; padding-bottom: 70px; }
-        
-        .header { display: flex; justify-content: space-between; padding: 15px; background: #fff; border-bottom: 1px solid #ddd; align-items: center; position: sticky; top: 0; }
-        .logo { font-weight: bold; font-size: 18px; color: #d32f2f; }
-        
-        .container { padding: 15px; }
-        
-        /* Form Đăng nhập/Đăng ký */
-        .auth-box { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .input-group { margin-bottom: 10px; }
-        .input-group input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
-        .btn-main { width: 100%; padding: 10px; background: #d32f2f; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
-
-        /* Bảng nạp tiền */
-        .deposit-box { background: #fff; padding: 20px; border-radius: 10px; }
-        .bank-info { background: #fff3e0; padding: 15px; border-left: 5px solid #ff9800; border-radius: 5px; }
-
-        .bottom-nav { 
-            position: fixed; bottom: 0; width: 100%; background: #fff; 
-            display: flex; justify-content: space-around; padding: 12px;
-            border-top: 2px solid #ddd; font-size: 11px;
+        :root {
+            --primary: #6366f1;
+            --bg: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
         }
-        .bottom-nav a { text-decoration: none; color: #555; text-align: center; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: white; margin: 0; padding-bottom: 80px; }
+        
+        /* Glassmorphism Header */
+        header { 
+            padding: 20px; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px);
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 100;
+        }
+        .btn-auth { padding: 8px 16px; border-radius: 20px; border: none; cursor: pointer; font-weight: bold; margin-left: 10px; transition: 0.3s; }
+        .btn-login { background: transparent; color: white; border: 1px solid white; }
+        .btn-register { background: var(--primary); color: white; }
+
+        /* Modern Hero Section */
+        .hero { padding: 40px 20px; text-align: center; }
+        .hero h1 { font-size: 24px; margin-bottom: 10px; }
+        
+        /* Modern Cards */
+        .auth-container { padding: 20px; }
+        .card { 
+            background: var(--card-bg); backdrop-filter: blur(15px);
+            padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
+        }
+        input { 
+            width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; 
+            background: #334155; border: none; color: white;
+        }
+        .btn-action { width: 100%; padding: 14px; border-radius: 10px; border: none; background: var(--primary); color: white; font-weight: bold; cursor: pointer; }
+
+        /* Navigation */
+        .nav-bar {
+            position: fixed; bottom: 0; width: 100%; background: rgba(30, 41, 59, 0.95);
+            display: flex; justify-content: space-around; padding: 15px; border-top: 1px solid rgba(255,255,255,0.1);
+        }
     </style>
 </head>
 <body>
 
-    <header class="header">
-        <div class="logo">Tạp Hoá Hồng Hải media</div>
-        <div>👤 Đăng nhập</div>
+    <header>
+        <div style="font-weight: 800; font-size: 1.2rem;">Hồng Hải Media</div>
+        <div>
+            <button class="btn-auth btn-login">Đăng nhập</button>
+            <button class="btn-auth btn-register">Đăng ký</button>
+        </div>
     </header>
 
-    <main class="container">
-        <div class="auth-box">
-            <h3>Đăng nhập hệ thống</h3>
-            <div class="input-group"><input type="text" placeholder="Tên đăng nhập"></div>
-            <div class="input-group"><input type="password" placeholder="Mật khẩu"></div>
-            <button class="btn-main">ĐĂNG NHẬP</button>
-            <p style="text-align:center; font-size: 13px;">Chưa có tài khoản? <a href="#">Đăng ký ngay</a></p>
+    <main class="auth-container">
+        <div class="card">
+            <h2>Chào mừng trở lại!</h2>
+            <input type="text" placeholder="Tên đăng nhập hoặc Email">
+            <input type="password" placeholder="Mật khẩu">
+            <button class="btn-action">ĐĂNG NHẬP NGAY</button>
         </div>
 
-        <div class="deposit-box">
-            <h3>Nạp tiền tự động</h3>
-            <div class="bank-info">
-                <p><strong>Ngân hàng:</strong> Vietcombank</p>
-                <p><strong>STK:</strong> 123456789</p>
-                <p><strong>Chủ TK:</strong> NGUYEN HONG HAI</p>
-                <p><strong>Nội dung:</strong> NAP HONGHAI [Username]</p>
+        <div class="card">
+            <h3>Nạp tiền siêu tốc</h3>
+            <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px;">
+                <p>VCB: 123456789 - NGUYEN HONG HAI</p>
+                <p style="color: #60a5fa; font-size: 0.9rem;">Nội dung: NAP HONGHAI [Username]</p>
             </div>
-            <button class="btn-main" style="margin-top: 15px; background: #2e7d32;">XÁC NHẬN NẠP TIỀN</button>
+            <button class="btn-action" style="background: #10b981; margin-top: 15px;">XÁC NHẬN CHUYỂN KHOẢN</button>
         </div>
     </main>
 
-    <nav class="bottom-nav">
-        <a href="#">Trang chủ</a>
-        <a href="#">Sản phẩm</a>
-        <a href="#">Nạp tiền</a>
-        <a href="#">Đơn hàng</a>
+    <nav class="nav-bar">
+        <span>🏠 Trang chủ</span>
+        <span>📦 Sản phẩm</span>
+        <span>💳 Nạp tiền</span>
+        <span>⚙️ Tài khoản</span>
     </nav>
 
 </body>
