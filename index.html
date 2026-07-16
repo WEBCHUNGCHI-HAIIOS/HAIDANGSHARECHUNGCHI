@@ -1,66 +1,448 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <title>Tạp Hoá Thập Cẩm Hồng Hải | MMO Media</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hồng Hải MMO | Dịch Vụ MMO Chuyên Nghiệp</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+scroll-behavior:smooth;
+}
+
+body{
+background:#05070d;
+color:#fff;
+overflow-x:hidden;
+}
+
+/* Background */
+
+body::before{
+content:'';
+position:fixed;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at 20% 20%,#00e5ff33,transparent 30%),
+radial-gradient(circle at 80% 10%,#00ff9933,transparent 30%),
+radial-gradient(circle at 50% 80%,#0066ff33,transparent 30%);
+animation:bgMove 12s linear infinite alternate;
+z-index:-2;
+}
+
+@keyframes bgMove{
+
+0%{
+transform:scale(1);
+}
+
+100%{
+transform:scale(1.2);
+}
+
+}
+
+/* Loading */
+
+#loading{
+
+position:fixed;
+
+left:0;
+
+top:0;
+
+width:100%;
+
+height:100%;
+
+background:#05070d;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+z-index:99999;
+
+flex-direction:column;
+
+}
+
+.loader{
+
+width:90px;
+
+height:90px;
+
+border-radius:50%;
+
+border:6px solid #222;
+
+border-top:6px solid #00e5ff;
+
+animation:spin 1s linear infinite;
+
+}
+
+@keyframes spin{
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+.loading-text{
+
+margin-top:25px;
+
+font-size:22px;
+
+font-weight:bold;
+
+color:#00e5ff;
+
+letter-spacing:2px;
+
+}
+
+/* Header */
+
+header{
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+padding:18px 60px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+background:rgba(255,255,255,.05);
+
+backdrop-filter:blur(20px);
+
+border-bottom:1px solid rgba(255,255,255,.08);
+
+z-index:1000;
+
+}
+
+.logo{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+font-size:28px;
+
+font-weight:800;
+
+color:#00e5ff;
+
+}
+
+.logo-circle{
+
+width:60px;
+
+height:60px;
+
+border-radius:50%;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+background:#00e5ff;
+
+color:#000;
+
+font-size:26px;
+
+font-weight:bold;
+
+box-shadow:0 0 35px #00e5ff;
+
+}
+
+nav{
+
+display:flex;
+
+gap:35px;
+
+}
+
+nav a{
+
+text-decoration:none;
+
+color:#fff;
+
+font-weight:600;
+
+transition:.3s;
+
+}
+
+nav a:hover{
+
+color:#00e5ff;
+
+}
+
+.header-right{
+
+display:flex;
+
+gap:15px;
+
+}
+
+.btn{
+
+padding:11px 24px;
+
+border:none;
+
+border-radius:12px;
+
+background:#00e5ff;
+
+color:#000;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.btn:hover{
+
+transform:translateY(-3px);
+
+box-shadow:0 0 20px #00e5ff;
+
+}
+
+/* Hero */
+
+.hero{
+
+height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+text-align:center;
+
+padding:20px;
+
+flex-direction:column;
+
+}
+
+.hero h1{
+
+font-size:70px;
+
+font-weight:800;
+
+background:linear-gradient(90deg,#00e5ff,#00ff9d);
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+}
+
+.hero p{
+
+margin-top:20px;
+
+font-size:22px;
+
+color:#ddd;
+
+max-width:800px;
+
+line-height:1.8;
+
+}
+
+.hero-buttons{
+
+margin-top:40px;
+
+display:flex;
+
+gap:20px;
+
+flex-wrap:wrap;
+
+}
+
+.hero-buttons button{
+
+padding:15px 35px;
+
+font-size:18px;
+
+border:none;
+
+border-radius:15px;
+
+cursor:pointer;
+
+font-weight:bold;
+
+}
+
+.btn-primary{
+
+background:#00e5ff;
+
+color:#000;
+
+}
+
+.btn-secondary{
+
+background:transparent;
+
+border:2px solid #00e5ff;
+
+color:#00e5ff;
+
+}
+
+section{
+
+padding:100px 60px;
+
+}
+
+.title{
+
+text-align:center;
+
+font-size:40px;
+
+margin-bottom:60px;
+
+color:#00e5ff;
+
+font-weight:800;
+
+}
+
+</style>
 </head>
-<body class="bg-gray-100">
 
-    <!-- Navbar -->
-    <nav class="bg-slate-900 text-white p-4 sticky top-0 z-50">
-        <div class="container mx-auto flex justify-between">
-            <h1 class="font-bold text-xl uppercase">Hồng Hải Media</h1>
-            <div class="space-x-4">
-                <a href="#san-pham">Sản phẩm MMO</a>
-                <a href="#dich-vu">Dịch vụ</a>
-            </div>
-        </div>
-    </nav>
+<body>
 
-    <!-- Main Container -->
-    <div class="container mx-auto py-10 px-4">
-        
-        <!-- Bộ lọc (Giả lập chức năng hiện đại) -->
-        <div class="mb-8 flex gap-4">
-            <button onclick="render('all')" class="bg-blue-600 text-white px-4 py-2 rounded">Tất cả</button>
-            <button onclick="render('sp')" class="bg-gray-200 px-4 py-2 rounded">Sản phẩm (50)</button>
-            <button onclick="render('dv')" class="bg-gray-200 px-4 py-2 rounded">Dịch vụ (20)</button>
-        </div>
+<div id="loading">
 
-        <!-- Lưới hiển thị -->
-        <div id="grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
-            <!-- Dữ liệu sẽ đổ vào đây bằng JS -->
-        </div>
-    </div>
+<div class="loader"></div>
 
-    <script>
-        // Dữ liệu mẫu (Bạn chỉ cần thêm vào mảng này)
-        const data = [
-            { id: 1, type: 'sp', name: 'Tool Facebook A', price: '200k' },
-            { id: 2, type: 'dv', name: 'Thiết kế Web chuẩn SEO', price: '5tr' },
-            // ... thêm 68 mục nữa vào đây
-        ];
+<div class="loading-text">
 
-        function render(filter) {
-            const grid = document.getElementById('grid');
-            grid.innerHTML = '';
-            
-            const filtered = filter === 'all' ? data : data.filter(item => item.type === filter);
-            
-            filtered.forEach(item => {
-                grid.innerHTML += `
-                    <div class="bg-white p-4 rounded-lg shadow hover:scale-105 transition">
-                        <div class="h-32 bg-gray-300 mb-2 rounded"></div>
-                        <h3 class="font-bold text-sm">${item.name}</h3>
-                        <p class="text-blue-600 font-bold">${item.price}</p>
-                        <button class="w-full mt-2 bg-slate-800 text-white py-1 rounded text-sm">Mua ngay</button>
-                    </div>
-                `;
-            });
-        }
-        // Gọi hàm hiển thị lần đầu
-        render('all');
-    </script>
-</body>
-</html>
+HỒNG HẢI MMO
+
+</div>
+
+</div>
+
+<header>
+
+<div class="logo">
+
+<div class="logo-circle">
+
+HH
+
+</div>
+
+<span>Hồng Hải MMO</span>
+
+</div>
+
+<nav>
+
+<a href="#">Trang Chủ</a>
+
+<a href="#">Dịch Vụ</a>
+
+<a href="#">Tin Tức</a>
+
+<a href="#">Liên Hệ</a>
+
+<a href="#">Hỗ Trợ</a>
+
+</nav>
+
+<div class="header-right">
+
+<button class="btn">Đăng Nhập</button>
+
+<button class="btn">Đăng Ký</button>
+
+</div>
+
+</header>
+
+<section class="hero">
+
+<h1>HỒNG HẢI MMO</h1>
+
+<p>
+
+Hệ thống dịch vụ Facebook, TikTok, Website, Media và MMO chuyên nghiệp với tốc độ xử lý nhanh, giao diện hiện đại và hỗ trợ 24/7.
+
+</p>
+
+<div class="hero-buttons">
+
+<button class="btn-primary">Khám Phá Dịch Vụ</button>
+
+<button class="btn-secondary">Liên Hệ Admin</button>
+
+</div>
+
+</section>
